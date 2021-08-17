@@ -1,6 +1,25 @@
-variable "subscription_id" {
+variable "policy_name" {
+  type = string
+}
+
+variable "rg_name" {
   type        = string
-  description = "subscription ID"
+  description = "resource group name"
+}
+
+variable "location" {
+  type        = string
+  description = "location name"
+}
+
+variable "rule_collection_name" {
+  type        = string
+  description = "rule collection name"
+}
+
+variable "rule_collection_priority" {
+  type        = number
+  description = "rule collection priority"
 }
 
 variable "network_rule_collection_name" {
@@ -78,3 +97,4 @@ variable "application_rules" {
   default     = []
   description = "list of network rules"
 }
+

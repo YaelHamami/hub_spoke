@@ -1,6 +1,46 @@
-variable "subscription_id" {
+variable "location" {
   type        = string
-  description = "subscription ID"
+  description = "location name"
+}
+
+variable "rg_name" {
+  type        = string
+  description = "resource group name"
+}
+
+variable "vm_private_ip" {
+  type        = string
+  description = "the private ip of the vm we want to ssh to"
+}
+
+variable "vnet_name" {
+  type        = string
+  description = "name of virtual network that contains the firewall"
+}
+
+variable "fw_name" {
+  type        = string
+  description = "firewall name"
+}
+
+variable "address_prefixes" {
+  type        = list(string)
+  description = "firewall address prefixes"
+}
+
+variable "policy_name" {
+  type = string
+  description = "policy name"
+}
+
+variable "rule_collection_name" {
+  type = string
+  description = "rule collection name"
+}
+
+variable "rule_collection_priority" {
+  type = number
+  description = "rule collection priority"
 }
 
 variable "network_rule_collection_name" {
@@ -23,7 +63,7 @@ variable "network_rules" {
     destination_addresses = list(string)
     destination_ports     = list(string)
   }))
-  default     = []
+  default     = null
   description = "list of network rules"
 }
 
@@ -77,4 +117,9 @@ variable "application_rules" {
   }))
   default     = []
   description = "list of network rules"
+}
+
+variable "log_analytics_workspace_id" {
+  type = string
+  description = "log analytics workspace id"
 }
