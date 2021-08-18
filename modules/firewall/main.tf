@@ -1,4 +1,4 @@
-resource "azurerm_subnet" "AzureFirewallSubnet" {
+resource "azurerm_subnet" "azure_firewall_subnet" {
   name                 = "AzureFirewallSubnet"
   resource_group_name  = var.rg_name
   virtual_network_name = var.vnet_name
@@ -6,7 +6,7 @@ resource "azurerm_subnet" "AzureFirewallSubnet" {
 }
 
 resource "azurerm_public_ip" "firewall_public_ip" {
-  name                = "firewall_public_ip"
+  name                = "firewall-public-ip"
   resource_group_name = var.rg_name
   location            = var.location
   allocation_method   = "Static"
@@ -39,18 +39,22 @@ resource "azurerm_firewall" "firewall" {
 
   ip_configuration {
     name                 = "configuration"
-    subnet_id            = azurerm_subnet.AzureFirewallSubnet.id
+    subnet_id            = azurerm_subnet.azure_firewall_subnet.id
     public_ip_address_id = azurerm_public_ip.firewall_public_ip.id
   }
 }
 
 resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
-  name                       = "diagnostic"
+  name                       = "firewall-diagnostic"
   target_resource_id         = azurerm_firewall.firewall.id
   log_analytics_workspace_id = var.log_analytics_workspace_id
 
   log {
     category = "AzureFirewallNetworkRule"
+  }
+
+  log{
+    category = "AzureFirewallApplicationRule"
   }
 
   metric {

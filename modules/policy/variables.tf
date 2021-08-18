@@ -1,6 +1,5 @@
-variable "location" {
-  type        = string
-  description = "location name"
+variable "policy_name" {
+  type = string
 }
 
 variable "rg_name" {
@@ -8,50 +7,30 @@ variable "rg_name" {
   description = "resource group name"
 }
 
-variable "vm_private_ip" {
+variable "location" {
   type        = string
-  description = "the private ip of the vm we want to ssh to"
-}
-
-variable "vnet_name" {
-  type        = string
-  description = "name of virtual network that contains the firewall"
-}
-
-variable "fw_name" {
-  type        = string
-  description = "firewall name"
-}
-
-variable "address_prefixes" {
-  type        = list(string)
-  description = "firewall address prefixes"
-}
-
-variable "policy_name" {
-  type = string
-  description = "policy name"
+  description = "location name"
 }
 
 variable "rule_collection_name" {
-  type = string
+  type        = string
   description = "rule collection name"
 }
 
 variable "rule_collection_priority" {
-  type = number
+  type        = number
   description = "rule collection priority"
 }
 
 variable "network_rule_collection_name" {
   type        = string
-  default     = ""
+  default     = null
   description = "network rule collection name"
 }
 
 variable "network_rule_collection_priority" {
   type        = number
-  default     = 650
+  default     = null
   description = "network rule collection name"
 }
 
@@ -63,19 +42,19 @@ variable "network_rules" {
     destination_addresses = list(string)
     destination_ports     = list(string)
   }))
-  default     = null
+  default     = []
   description = "list of network rules"
 }
 
 variable "nat_rule_collection_name" {
   type        = string
-  default     = ""
+  default     = null
   description = "nat rule collection name"
 }
 
 variable "nat_rule_collection_priority" {
   type        = number
-  default     = 700
+  default     = null
   description = "nat rule collection name"
 }
 
@@ -95,13 +74,13 @@ variable "nat_rules" {
 
 variable "application_rule_collection_name" {
   type        = string
-  default     = ""
+  default     = null
   description = "nat rule collection name"
 }
 
 variable "application_rule_collection_priority" {
   type        = number
-  default     = 700
+  default     = null
   description = "nat rule collection name"
 }
 
@@ -119,7 +98,3 @@ variable "application_rules" {
   description = "list of network rules"
 }
 
-variable "log_analytics_workspace_id" {
-  type = string
-  description = "log analytics workspace id"
-}

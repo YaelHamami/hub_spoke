@@ -12,8 +12,8 @@ resource "azurerm_firewall_policy_rule_collection_group" "rule_collection" {
   dynamic network_rule_collection {
     for_each = length(var.network_rules) > 0 ? [1] : []
     content {
-      name     = "bob"
-      priority = 300
+      name     = var.network_rule_collection_name
+      priority = var.network_rule_collection_priority
       action   = "Allow"
 
       dynamic "rule" {

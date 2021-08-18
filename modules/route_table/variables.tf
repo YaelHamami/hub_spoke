@@ -1,3 +1,7 @@
+terraform {
+  experiments = [module_variable_optional_attrs]
+}
+
 variable "route_table_name" {
   type        = string
   description = "route table name"
@@ -14,7 +18,7 @@ variable "rg_name" {
 }
 
 variable "associated_subnet_id" {
-  type = string
+  type        = string
   description = "associated subnet id"
 }
 
@@ -22,6 +26,7 @@ variable "routes" {
   type = list(object({
     name                       = string
     destination_address_prefix = string
-    firewall_private_ip        = string
+    next_hop_type              = string
+    next_hop_ip_address        = optional(string)
   }))
 }

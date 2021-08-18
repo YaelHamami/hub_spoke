@@ -5,18 +5,16 @@ variable "subscription_id" {
 
 variable "network_rule_collection_name" {
   type        = string
-  default     = ""
   description = "network rule collection name"
 }
 
 variable "network_rule_collection_priority" {
   type        = number
-  default     = 650
   description = "network rule collection name"
 }
 
 variable "network_rules" {
-  type        = list(object({
+  type = list(object({
     name                  = string
     protocols             = list(string)
     source_addresses      = list(string)
@@ -40,7 +38,7 @@ variable "nat_rule_collection_priority" {
 }
 
 variable "nat_rules" {
-  type        = list(object({
+  type = list(object({
     name                  = string
     protocols             = list(string)
     source_addresses      = list(string)
@@ -66,9 +64,9 @@ variable "application_rule_collection_priority" {
 }
 
 variable "application_rules" {
-  type        = list(object({
-    name              = string
-    protocols         = list(object({
+  type = list(object({
+    name = string
+    protocols = list(object({
       type = string
       port = number
     }))

@@ -1,15 +1,16 @@
 variable "nic_name" {
   type        = string
-  description = "network_interface_name"
+  description = " name of the vm's nic"
 }
 
 variable "location" {
-  type = string
+  type        = string
+  description = "nic's location"
 }
 
 variable "subnet_id" {
   type        = string
-  description = "subnet id"
+  description = "nic's subnet id"
 }
 
 variable "rg_name" {
@@ -23,11 +24,11 @@ variable "comp_name" {
 }
 
 variable "admin_username" {
-  type = string
+  type        = string
   description = "admin username"
 }
 
 variable "admin_password" {
-  type = string
+  type        = string
   description = "admin password"
 }
