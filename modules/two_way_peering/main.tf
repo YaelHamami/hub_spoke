@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "2.72.0"
+    }
+  }
+}
+
 resource "azurerm_virtual_network_peering" "vnet1_vnet2" {
   name                         = var.vnet1_vnet2_name
   resource_group_name          = var.vnet1_vnet2_resource_group_name

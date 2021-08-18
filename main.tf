@@ -1,7 +1,15 @@
-provider "azurerm" {
-  subscription_id = var.subscription_id
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "2.72.0"
+    }
+  }
+}
 
+provider "azurerm" {
   features {}
+  subscription_id = var.subscription_id
 }
 
 resource "azurerm_resource_group" "hub" {
@@ -18,22 +26,22 @@ resource "azurerm_virtual_network" "hub_vnet" {
   name                = "hub"
   location            = azurerm_resource_group.hub.location
   resource_group_name = azurerm_resource_group.hub.name
-  address_space = [
-  "10.1.0.0/24"]
-  dns_servers = [
+  address_space       = [
+    "10.1.0.0/24"]
+  dns_servers         = [
     "10.1.0.4",
-  "10.1.0.5"]
+    "10.1.0.5"]
 }
 
 resource "azurerm_virtual_network" "spoke_vnet" {
   name                = "spoke"
   location            = azurerm_resource_group.spoke.location
   resource_group_name = azurerm_resource_group.spoke.name
-  address_space = [
-  "10.0.0.0/24"]
-  dns_servers = [
+  address_space       = [
+    "10.0.0.0/24"]
+  dns_servers         = [
     "10.0.0.4",
-  "10.0.0.5"]
+    "10.0.0.5"]
 
   subnet {
     name           = "vm-subnet"
@@ -63,7 +71,7 @@ module "vpn_connection" {
   aad_tenant              = "https://login.microsoftonline.com/c9ad96a7-2bac-49a7-abf6-8e932f60bf2b"
   aad_audience            = "41b23e61-6c1e-4545-b367-cd054e0ed4b4"
   aad_issuer              = "https://sts.windows.net/c9ad96a7-2bac-49a7-abf6-8e932f60bf2b/"
-  depends_on = [
+  depends_on              = [
     azurerm_virtual_network.hub_vnet,
   ]
 }
@@ -80,16 +88,16 @@ module "firewall" {
   rule_collection_priority         = 400
   network_rule_collection_name     = "network-rule-collection"
   network_rule_collection_priority = 400
-  network_rules = [
+  network_rules                    = [
     {
       name                  = "network_rule_collection1_rule1"
       protocols             = ["Any"]
       source_addresses      = ["*"]
       destination_addresses = ["*"]
       destination_ports     = ["*"]
-  }]
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.firewall_logs.id
-  depends_on                 = [azurerm_virtual_network.hub_vnet]
+    }]
+  log_analytics_workspace_id       = azurerm_log_analytics_workspace.firewall_logs.id
+  depends_on                       = [azurerm_virtual_network.hub_vnet]
 }
 
 resource "azurerm_log_analytics_workspace" "firewall_logs" {
@@ -101,16 +109,16 @@ resource "azurerm_log_analytics_workspace" "firewall_logs" {
 }
 
 module "firewall_to_spoke" {
-  source           = "./modules/route_table"
-  rg_name          = azurerm_resource_group.hub.name
-  location         = azurerm_resource_group.hub.location
-  route_table_name = "firewall-to-spoke"
-  routes = [{
+  source               = "./modules/route_table"
+  rg_name              = azurerm_resource_group.hub.name
+  location             = azurerm_resource_group.hub.location
+  route_table_name     = "firewall-to-spoke"
+  routes               = [{
     name                       = "firewall-to-spoke"
     destination_address_prefix = "10.0.0.0/24"
     next_hop_type              = "VirtualAppliance"
     next_hop_ip_address        = "10.1.0.4"
-    },
+  },
     {
       name                       = "firewall-to-spoke"
       destination_address_prefix = "10.0.0.0/24"
@@ -122,16 +130,16 @@ module "firewall_to_spoke" {
 }
 
 module "spoke_out" {
-  source           = "./modules/route_table"
-  rg_name          = azurerm_resource_group.spoke.name
-  location         = azurerm_resource_group.spoke.location
-  route_table_name = "spoke-out"
-  routes = [{
+  source               = "./modules/route_table"
+  rg_name              = azurerm_resource_group.spoke.name
+  location             = azurerm_resource_group.spoke.location
+  route_table_name     = "spoke-out"
+  routes               = [{
     name                       = "spoke-out"
     destination_address_prefix = "192.168.0.0/24"
     next_hop_type              = "VirtualAppliance"
     next_hop_ip_address        = "10.1.0.4"
-    }
+  }
   ]
   associated_subnet_id = tolist(azurerm_virtual_network.spoke_vnet.subnet)[0].id
   depends_on           = [module.firewall, module.vpn_connection]
@@ -149,10 +157,10 @@ module "v1_v2_two_way_peering" {
   vnet2_vnet1_name                  = "peering-v2-v1"
   vnet2_vnet1_resource_group_name   = azurerm_virtual_network.spoke_vnet.resource_group_name
   vnet2_vnet1_use_remote_gateways   = true
-  depends_on = [
+  depends_on                        = [
     azurerm_virtual_network.hub_vnet,
     azurerm_virtual_network.spoke_vnet,
-  module.vpn_connection]
+    module.vpn_connection]
 }
 
 

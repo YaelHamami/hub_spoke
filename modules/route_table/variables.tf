@@ -1,7 +1,3 @@
-terraform {
-  experiments = [module_variable_optional_attrs]
-}
-
 variable "route_table_name" {
   type        = string
   description = "route table name"

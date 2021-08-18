@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "2.72.0"
+    }
+  }
+}
+
 resource "azurerm_firewall_policy" "policy" {
   name                = var.policy_name
   resource_group_name = var.rg_name
