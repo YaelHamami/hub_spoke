@@ -1,16 +1,7 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "2.72.0"
-    }
-  }
-}
-
 resource "azurerm_network_interface" "nic" {
   name                = var.nic_name
   location            = var.location
-  resource_group_name = var.rg_name
+  resource_group_name = var.resource_group_name
 
   ip_configuration {
     name                          = "internal"
@@ -21,7 +12,7 @@ resource "azurerm_network_interface" "nic" {
 
 resource "azurerm_virtual_machine" "vm" {
   name                  = var.comp_name
-  resource_group_name   = var.rg_name
+  resource_group_name   = var.resource_group_name
   location              = var.location
   vm_size               = "Standard_F2"
   network_interface_ids = [

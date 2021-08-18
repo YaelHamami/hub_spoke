@@ -1,22 +1,13 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "2.72.0"
-    }
-  }
-}
-
 resource "azurerm_subnet" "azure_firewall_subnet" {
   name                 = "AzureFirewallSubnet"
-  resource_group_name  = var.rg_name
+  resource_group_name  = var.resource_group_name
   virtual_network_name = var.vnet_name
   address_prefixes     = var.address_prefixes
 }
 
 resource "azurerm_public_ip" "firewall_public_ip" {
   name                = "firewall-public-ip"
-  resource_group_name = var.rg_name
+  resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = "Static"
   sku                 = "Standard"
@@ -26,7 +17,7 @@ module "policy" {
   source                               = "./../policy"
   location                             = var.location
   policy_name                          = var.policy_name
-  rg_name                              = var.rg_name
+  resource_group_name                              = var.resource_group_name
   rule_collection_name                 = var.rule_collection_name
   rule_collection_priority             = var.rule_collection_priority
   network_rule_collection_name         = var.network_rule_collection_name
@@ -41,9 +32,9 @@ module "policy" {
 }
 
 resource "azurerm_firewall" "firewall" {
-  name                = var.fw_name
+  name                = var.firewall_name
   location            = var.location
-  resource_group_name = var.rg_name
+  resource_group_name = var.resource_group_name
   firewall_policy_id  = module.policy.policy_id
 
   ip_configuration {

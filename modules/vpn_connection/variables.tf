@@ -13,7 +13,7 @@ variable "location" {
   description = "location name"
 }
 
-variable "rg_name" {
+variable "resource_group_name" {
   type        = string
   description = "resource group name"
 }
@@ -30,8 +30,7 @@ variable "virtual_gateway_name" {
 
 variable "client_address_space" {
   type    = list(string)
-  default = [
-    "192.168.0.0/24"]
+  description = "the address space the client side use while using the vpn connection"
 }
 
 variable "aad_tenant" {

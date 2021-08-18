@@ -3,7 +3,7 @@ variable "location" {
   description = "location name"
 }
 
-variable "rg_name" {
+variable "resource_group_name" {
   type        = string
   description = "resource group name"
 }
@@ -13,7 +13,7 @@ variable "vnet_name" {
   description = "name of virtual network that contains the firewall"
 }
 
-variable "fw_name" {
+variable "firewall_name" {
   type        = string
   description = "firewall name"
 }

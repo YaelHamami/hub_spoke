@@ -1,89 +1,89 @@
-variable "vnet1_vnet2_name" {
+variable "local_to_remote_name" {
   type = string
-  description = "the name of the peering from vnet1 to vnet2"
+  description = "the name of the peering from local to remote"
 }
 
-variable "vnet1_vnet2_resource_group_name" {
+variable "local_to_remote_resource_group_name" {
   type = string
-  description = "resource group name of the peering from vnet1 to vnet2"
+  description = "resource group name of the peering from local to remote"
 }
 
-variable "vnet1_name" {
+variable "local_network_name" {
   type = string
-  description = "the name of the first vnet"
+  description = "the name of the local vnet"
 }
 
-variable "vnet2_id" {
+variable "remote_vnet_id" {
   type = string
-  description = "the id of the second vnet"
+  description = "the id of the remote vnet"
 }
 
-variable "vnet1_vnet2_allow_gateway_transit" {
+variable "local_remote_allow_gateway_transit" {
   type = bool
   default = false
-  description = "does the peering from vnet 1 to vnet 2 allow gateway transit"
+  description = "does the peering from the local to the remote vnet allow gateway transit"
 }
 
-variable "vnet1_vnet2_use_remote_gateways" {
+variable "local_remote_use_remote_gateways" {
   type = bool
   default = false
-  description = "does the peering from vnet 1 to vnet 2 use remote gateways"
+  description = "does the peering of the local vnet to the remote vnet remote use's remote gateways"
 }
 
-variable "vnet1_vnet2_allow_forwarded_traffic" {
+variable "local_remote_allow_forwarded_traffic" {
   type = bool
   default = true
-  description = "does the peering from vnet 1 to vnet 2 allow_forwarded_traffic"
+  description = "does the peering from the local vnet to the remote vnet allow_forwarded_traffic"
 }
 
-variable "vnet1_vnet2_allow_virtual_network_access" {
+variable "local_remote_allow_virtual_network_access" {
   type = bool
   default = true
-  description = "does the peering from vnet 1 to vnet 2 allow virtual network access"
+  description = "does the peering from the local to the remote vnet allow virtual network access"
 }
 
-variable "vnet2_vnet1_name" {
+variable "remote_to_local_name" {
   type = string
-  description = "the name of the peering from vnet2 to vnet1"
+  description = "the name of the peering from remote to local"
 }
 
-variable "vnet2_vnet1_resource_group_name" {
+variable "remote_local_resource_group_name" {
   type = string
-  description = "resource group name of the peering from vnet2 to vnet1"
+  description = "resource group name of the peering from remote to local"
 }
 
-variable "vnet2_name" {
+variable "remote_vnet_name" {
   type = string
   description = "the name of the second vnet"
 }
 
-variable "vnet1_id" {
+variable "local_vnet_id" {
   type = string
-  description = "the id of the first vnet"
+  description = "the id of the local vnet"
 }
 
-variable "vnet2_vnet1_allow_gateway_transit" {
+variable "remote_local_allow_gateway_transit" {
   type = bool
   default = false
-  description = "does the peering from vnet2 to vnet1 allow gateway transit"
+  description = "does the peering from remote to local allow gateway transit"
 }
 
-variable "vnet2_vnet1_use_remote_gateways" {
+variable "remote_local_use_remote_gateways" {
   type = bool
   default = false
-  description = "does the peering from vnet2 to vnet1 use remote gateways"
+  description = "does the peering from remote to local use remote gateways"
 }
 
-variable "vnet2_vnet1_allow_forwarded_traffic" {
+variable "remote_local_allow_forwarded_traffic" {
   type = bool
   default = true
-  description = "does the peering from vnet2 to vnet1 allow_forwarded_traffic"
+  description = "does the peering from remote to local allow forwarded traffic"
 }
 
-variable "vnet2_vnet1_allow_virtual_network_access" {
+variable "remote_local_allow_virtual_network_access" {
   type = bool
   default = true
-  description = "does the peering from vnet2 to vnet1 allow virtual network access"
+  description = "does the peering from remote to local allow virtual network access"
 }
 
 

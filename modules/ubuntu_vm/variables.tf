@@ -13,7 +13,7 @@ variable "subnet_id" {
   description = "nic's subnet id"
 }
 
-variable "rg_name" {
+variable "resource_group_name" {
   type        = string
   description = "resource group name"
 }
