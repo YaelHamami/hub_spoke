@@ -52,6 +52,6 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_firewall_private_ip"></a> [firewall\_private\_ip](#output\_firewall\_private\_ip) | n/a |
-| <a name="output_public_ip_address"></a> [public\_ip\_address](#output\_public\_ip\_address) | n/a |
-| <a name="output_subnet_id"></a> [subnet\_id](#output\_subnet\_id) | n/a |
+| <a name="output_firewall_private_ip"></a> [firewall\_private\_ip](#output\_firewall\_private\_ip) | the private ip address of the firewall |
+| <a name="output_public_ip_address"></a> [public\_ip\_address](#output\_public\_ip\_address) | the public ip address of the firewall |
+| <a name="output_subnet_id"></a> [subnet\_id](#output\_subnet\_id) | the id of the subnet that contains the firewall |

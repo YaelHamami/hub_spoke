@@ -51,6 +51,7 @@ variable "aad_issuer" {
 variable "vpn_client_protocols" {
   type    = list(string)
   default = ["OpenVPN",]
+  description = "the protocol used for the vpn connection"
 }
 
 variable "sku" {

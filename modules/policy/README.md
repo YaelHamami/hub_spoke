@@ -44,4 +44,4 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_policy_id"></a> [policy\_id](#output\_policy\_id) | n/a |
+| <a name="output_policy_id"></a> [policy\_id](#output\_policy\_id) | the id of the policy |

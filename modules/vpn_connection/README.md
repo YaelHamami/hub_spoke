@@ -37,11 +37,11 @@ No modules.
 | <a name="input_subnet_address_prefixes"></a> [subnet\_address\_prefixes](#input\_subnet\_address\_prefixes) | the address prefixes of the gateway subnet | `list(string)` | n/a | yes |
 | <a name="input_virtual_gateway_name"></a> [virtual\_gateway\_name](#input\_virtual\_gateway\_name) | virtual gateway name | `string` | n/a | yes |
 | <a name="input_vnet_name"></a> [vnet\_name](#input\_vnet\_name) | name of virtual network that contains the firewall | `string` | n/a | yes |
-| <a name="input_vpn_client_protocols"></a> [vpn\_client\_protocols](#input\_vpn\_client\_protocols) | n/a | `list(string)` | <pre>[<br>  "OpenVPN"<br>]</pre> | no |
+| <a name="input_vpn_client_protocols"></a> [vpn\_client\_protocols](#input\_vpn\_client\_protocols) | the protocol used for the vpn connection | `list(string)` | <pre>[<br>  "OpenVPN"<br>]</pre> | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_client_address_space"></a> [client\_address\_space](#output\_client\_address\_space) | n/a |
-| <a name="output_gateway_subnet_id"></a> [gateway\_subnet\_id](#output\_gateway\_subnet\_id) | n/a |
+| <a name="output_client_address_space"></a> [client\_address\_space](#output\_client\_address\_space) | the address space the client uses to communicate with the other networks |
+| <a name="output_gateway_subnet_id"></a> [gateway\_subnet\_id](#output\_gateway\_subnet\_id) | the id of the subnet that contains the gateway |
