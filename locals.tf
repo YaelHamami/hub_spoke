@@ -15,16 +15,16 @@ locals {
 
   hub_routes =  [{
     name                       = "firewall-to-spoke"
-    destination_address_prefix = "azurerm_virtual_network.spoke_vnet.address_space[0]"
+    destination_address_prefix = azurerm_virtual_network.spoke_vnet.address_space[0]
     next_hop_type              = "VirtualAppliance"
-    next_hop_ip_address        = "module.firewall.private_ip"
+    next_hop_ip_address        = module.firewall.private_ip
   },]
 
   spoke_routes = [{
     name                       = "spoke-out"
-    destination_address_prefix = "module.vpn.client_address_space"
+    destination_address_prefix = module.vpn.client_address_space
     next_hop_type              = "VirtualAppliance"
-    next_hop_ip_address        = "module.firewall.private_ip"
+    next_hop_ip_address        = module.firewall.private_ip
   }
   ]
 

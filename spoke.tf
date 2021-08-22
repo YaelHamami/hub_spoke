@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "spoke" {
 }
 
 resource "azurerm_virtual_network" "spoke_vnet" {
-  name                = "${local.prefixes.spoke_prefix}-spoke-rg"
+  name                = "${local.prefixes.spoke_prefix}-spoke"
   location            = azurerm_resource_group.spoke.location
   resource_group_name = azurerm_resource_group.spoke.name
   address_space       = [
