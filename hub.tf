@@ -24,7 +24,6 @@ module "vpn" {
   subnet_address_prefixes = ["10.1.0.128/27"]
   client_address_space    = ["192.168.0.0/24"]
   virtual_gateway_name    = "${local.prefixes.hub_prefix}-virtual-gateway"
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.logs.id
   aad_tenant              = "https://login.microsoftonline.com/${var.tenant_id}"
   aad_audience            = var.audience_id
   aad_issuer              = "https://sts.windows.net/${var.tenant_id}/"

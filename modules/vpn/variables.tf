@@ -59,8 +59,3 @@ variable "sku" {
   default     = "Standard"
   description = "gateway sku"
 }
-
-variable "log_analytics_workspace_id" {
-  type = string
-  description = "The workspace where all the vpn related logs are saved."
-}
