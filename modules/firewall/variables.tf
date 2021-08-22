@@ -38,21 +38,14 @@ variable "rule_collection_priority" {
   description = "rule collection priority"
 }
 
-variable "network_rule_collection_name" {
-  type        = string
-  default     = null
-  description = "network rule collection name"
-}
-
 variable "network_rule_collection_priority" {
   type        = number
-  default     = null
+  default     = 200
   description = "network rule collection name"
 }
 
 variable "network_rules" {
   type        = list(object({
-    name                  = string
     protocols             = list(string)
     source_addresses      = list(string)
     destination_addresses = list(string)
@@ -62,15 +55,9 @@ variable "network_rules" {
   description = "list of network rules"
 }
 
-variable "nat_rule_collection_name" {
-  type        = string
-  default     = null
-  description = "nat rule collection name"
-}
-
 variable "nat_rule_collection_priority" {
   type        = number
-  default     = null
+  default     = 100
   description = "nat rule collection name"
 }
 
@@ -88,15 +75,9 @@ variable "nat_rules" {
   description = "list of network rules"
 }
 
-variable "application_rule_collection_name" {
-  type        = string
-  default     = null
-  description = "nat rule collection name"
-}
-
 variable "application_rule_collection_priority" {
   type        = number
-  default     = null
+  default     = 300
   description = "nat rule collection name"
 }
 
@@ -116,5 +97,24 @@ variable "application_rules" {
 
 variable "log_analytics_workspace_id" {
   type = string
-  description = "log analytics workspace id"
+  description = "Log analytics workspace id."
 }
+
+variable "network_rule_action" {
+  type = string
+  default = "Allow"
+  description = "Network rule action."
+}
+
+variable "nat_rule_action" {
+  type = string
+  default = "Allow"
+  description = "Nat rule action."
+}
+
+variable "application_rule_action" {
+  type = string
+  default = "Deny"
+  description = "Application rule action."
+}
+

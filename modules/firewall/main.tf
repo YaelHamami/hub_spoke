@@ -14,28 +14,28 @@ resource "azurerm_public_ip" "firewall_public_ip" {
 }
 
 module "policy" {
-  source                               = "./../policy"
+  source                               = "../firewall_policy"
   location                             = var.location
   policy_name                          = var.policy_name
-  resource_group_name                              = var.resource_group_name
+  resource_group_name                  = var.resource_group_name
   rule_collection_name                 = var.rule_collection_name
   rule_collection_priority             = var.rule_collection_priority
-  network_rule_collection_name         = var.network_rule_collection_name
   network_rule_collection_priority     = var.network_rule_collection_priority
   network_rules                        = var.network_rules
-  nat_rule_collection_name             = var.nat_rule_collection_name
+  network_rule_action                  = var.network_rule_action
   nat_rule_collection_priority         = var.nat_rule_collection_priority
   nat_rules                            = var.nat_rules
-  application_rule_collection_name     = var.application_rule_collection_name
+  nat_rule_action                      = var.nat_rule_action
   application_rule_collection_priority = var.application_rule_collection_priority
   application_rules                    = var.application_rules
+  application_rule_action              = var.application_rule_action
 }
 
 resource "azurerm_firewall" "firewall" {
   name                = var.firewall_name
   location            = var.location
   resource_group_name = var.resource_group_name
-  firewall_policy_id  = module.policy.policy_id
+  firewall_policy_id  = module.policy.id
 
   ip_configuration {
     name                 = "configuration"
@@ -53,7 +53,7 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
     category = "AzureFirewallNetworkRule"
   }
 
-  log{
+  log {
     category = "AzureFirewallApplicationRule"
   }
 
@@ -61,7 +61,6 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
     category = "AllMetrics"
   }
 }
-
 
 
 

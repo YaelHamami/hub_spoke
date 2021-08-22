@@ -1,21 +1,21 @@
 variable "route_table_name" {
   type        = string
-  description = "route table name"
+  description = "Route table name"
 }
 
 variable "location" {
   type        = string
-  description = "location name"
+  description = "Location name"
 }
 
 variable "resource_group_name" {
   type        = string
-  description = "resource group name"
+  description = "Resource group name"
 }
 
 variable "associated_subnet_id" {
   type        = string
-  description = "associated subnet id"
+  description = "Associated subnet id"
 }
 
 variable "routes" {

@@ -1,0 +1,38 @@
+All the prefixes:
+%{ for key, value in prefixes ~}
+    Prefix: ${key} , value: ${value}
+
+%{ endfor }
+
+network rules:
+%{ for rule in network-rules ~}
+    rule:
+    %{ for k, v in "${rule}"}
+        ${k}:  "${join(",", v)}"
+    %{ endfor }
+%{ endfor }
+
+All hub routs:
+%{ for route in hub-routes ~}
+    route:
+    %{ for k, v in "${route}"}
+        ${k}: ${v}
+    %{ endfor }
+%{ endfor }
+
+All spoke routs:
+%{ for route in spoke-routes ~}
+    route:
+    %{ for k, v in "${route}"}
+        ${k}: ${v}
+    %{ endfor }
+%{ endfor }
+
+storage data disks:
+%{ for disk in storage-data-disks ~}
+    disk:
+    %{ for key, value in "${disk}"}
+        ${key}: ${value}
+    %{ endfor }
+%{ endfor }
+

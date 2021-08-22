@@ -12,14 +12,13 @@ resource "azurerm_firewall_policy_rule_collection_group" "rule_collection" {
   dynamic network_rule_collection {
     for_each = length(var.network_rules) > 0 ? [1] : []
     content {
-      name     = var.network_rule_collection_name
+      name     = "network-rule-collection"
       priority = var.network_rule_collection_priority
-      action   = "Allow"
-
+      action   = var.network_rule_action
       dynamic "rule" {
         for_each = var.network_rules
         content {
-          name                  = rule.value.name
+          name                  = "network-rule-${rule.key + 1}"
           protocols             = rule.value.protocols
           source_addresses      = rule.value.source_addresses
           destination_addresses = rule.value.destination_addresses
@@ -32,14 +31,14 @@ resource "azurerm_firewall_policy_rule_collection_group" "rule_collection" {
   dynamic nat_rule_collection {
     for_each = length(var.nat_rules) > 0 ? [1] : []
     content {
-      name     = var.nat_rule_collection_name
+      name     = "nat-rule-collection"
       priority = var.nat_rule_collection_priority
-      action   = "Allow"
+      action   = var.nat_rule_action
 
       dynamic "rule" {
         for_each = var.nat_rules
         content {
-          name                = rule.value.name
+          name                = "nat-rule-${rule.key + 1}"
           protocols           = rule.value.protocols
           source_addresses    = rule.value.source_addresses
           destination_address = rule.value.destination_address
@@ -54,14 +53,14 @@ resource "azurerm_firewall_policy_rule_collection_group" "rule_collection" {
   dynamic application_rule_collection {
     for_each = length(var.application_rules) > 0 ? [1] : []
     content {
-      name     = var.application_rule_collection_name
+      name     = "application-rule-collection"
       priority = var.application_rule_collection_priority
-      action   = "Deny"
+      action   = var.application_rule_action
 
       dynamic "rule" {
         for_each = var.application_rules
         content {
-          name              = rule.value.name
+          name              = "application-rule-${rule.key + 1}"
           source_addresses  = rule.value.source_addresses
           destination_fqdns = rule.value.destination_fqdns
 

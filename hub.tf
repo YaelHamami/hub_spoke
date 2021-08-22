@@ -1,5 +1,10 @@
+resource "azurerm_resource_group" "hub" {
+  name     = "${local.prefixes.hub_prefix}-rg"
+  location = "West Europe"
+}
+
 resource "azurerm_virtual_network" "hub_vnet" {
-  name                = "hub"
+  name                = "${local.prefixes.hub_prefix}-vnet"
   location            = azurerm_resource_group.hub.location
   resource_group_name = azurerm_resource_group.hub.name
   address_space       = [
@@ -10,18 +15,19 @@ resource "azurerm_virtual_network" "hub_vnet" {
 }
 
 
-module "vpn_connection" {
-  source                  = "./modules/vpn_connection"
+module "vpn" {
+  source                  = "./modules/vpn"
   location                = azurerm_resource_group.hub.location
   resource_group_name     = azurerm_resource_group.hub.name
   vnet_name               = azurerm_virtual_network.hub_vnet.name
-  public_ip_name          = "gateway-ip"
+  public_ip_name          = "${local.prefixes.hub_prefix}-gateway-public-ip"
   subnet_address_prefixes = ["10.1.0.128/27"]
   client_address_space    = ["192.168.0.0/24"]
-  virtual_gateway_name    = "hub-gateway"
-  aad_tenant              = "https://login.microsoftonline.com/c9ad96a7-2bac-49a7-abf6-8e932f60bf2b"
-  aad_audience            = "41b23e61-6c1e-4545-b367-cd054e0ed4b4"
-  aad_issuer              = "https://sts.windows.net/c9ad96a7-2bac-49a7-abf6-8e932f60bf2b/"
+  virtual_gateway_name    = "${local.prefixes.hub_prefix}-virtual-gateway"
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.logs.id
+  aad_tenant              = "https://login.microsoftonline.com/${var.tenant_id}"
+  aad_audience            = var.audience_id
+  aad_issuer              = "https://sts.windows.net/${var.tenant_id}/"
   depends_on              = [
     azurerm_virtual_network.hub_vnet,
   ]
@@ -29,30 +35,21 @@ module "vpn_connection" {
 
 module "firewall" {
   source                           = "./modules/firewall"
-  firewall_name                    = "hub-firewall"
+  firewall_name                    = "${local.prefixes.hub_prefix}-firewall"
   location                         = azurerm_resource_group.hub.location
   resource_group_name              = azurerm_resource_group.hub.name
   vnet_name                        = azurerm_virtual_network.hub_vnet.name
   address_prefixes                 = ["10.1.0.0/26"]
-  policy_name                      = "policy"
-  rule_collection_name             = "rule-collection"
+  policy_name                      = "${local.prefixes.hub_prefix}-firewall-policy"
+  rule_collection_name             = "${local.prefixes.hub_prefix}-rule-collection"
   rule_collection_priority         = 400
-  network_rule_collection_name     = "network-rule-collection"
-  network_rule_collection_priority = 400
-  network_rules                    = [
-    {
-      name                  = "network_rule_collection1_rule1"
-      protocols             = ["Any"]
-      source_addresses      = ["*"]
-      destination_addresses = ["*"]
-      destination_ports     = ["*"]
-    }]
-  log_analytics_workspace_id       = azurerm_log_analytics_workspace.firewall_logs.id
+  network_rules                    = local.network_rules
+  log_analytics_workspace_id       = azurerm_log_analytics_workspace.logs.id
   depends_on                       = [azurerm_virtual_network.hub_vnet]
 }
 
-resource "azurerm_log_analytics_workspace" "firewall_logs" {
-  name                = "firewall-logs"
+resource "azurerm_log_analytics_workspace" "logs" {
+  name                = "${local.prefixes.hub_prefix}-firewall-logs-workspace"
   location            = azurerm_resource_group.hub.location
   resource_group_name = azurerm_resource_group.hub.name
   sku                 = "PerGB2018"
@@ -63,33 +60,28 @@ module "firewall_to_spoke" {
   source               = "./modules/route_table"
   resource_group_name  = azurerm_resource_group.hub.name
   location             = azurerm_resource_group.hub.location
-  route_table_name     = "firewall-to-spoke"
-  routes               = [{
-    name                       = "firewall-to-spoke"
-    destination_address_prefix = azurerm_virtual_network.spoke_vnet.address_space[0]
-    next_hop_type              = "VirtualAppliance"
-    next_hop_ip_address        = module.firewall.firewall_private_ip
-  },]
-  associated_subnet_id = module.vpn_connection.gateway_subnet_id
-  depends_on           = [module.firewall, module.vpn_connection]
+  route_table_name     = "${local.prefixes.hub_prefix}-firewall-to-spoke-route-table"
+  routes               = local.hub_routes
+  associated_subnet_id = module.vpn.gateway_subnet_id
+  depends_on           = [module.firewall, module.vpn]
 }
 
 module "local_remote_peering" {
   source                              = "./modules/two_way_peering"
   local_network_name                  = azurerm_virtual_network.hub_vnet.name
   local_vnet_id                       = azurerm_virtual_network.hub_vnet.id
-  local_to_remote_name                = "local-to-remote"
+  local_to_remote_name                = "${local.prefixes.hub_prefix}-local-to-remote-peering"
   local_to_remote_resource_group_name = azurerm_virtual_network.hub_vnet.resource_group_name
   local_remote_allow_gateway_transit  = true
   remote_vnet_name                    = azurerm_virtual_network.spoke_vnet.name
   remote_vnet_id                      = azurerm_virtual_network.spoke_vnet.id
-  remote_to_local_name                = "remote-to-local"
+  remote_to_local_name                = "${local.prefixes.hub_prefix}-remote-to-local-peering"
   remote_local_resource_group_name    = azurerm_virtual_network.spoke_vnet.resource_group_name
   remote_local_use_remote_gateways    = true
   depends_on                          = [
     azurerm_virtual_network.hub_vnet,
     azurerm_virtual_network.spoke_vnet,
-    module.vpn_connection]
+    module.vpn]
 }
 
 

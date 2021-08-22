@@ -38,3 +38,15 @@ resource "azurerm_virtual_network_gateway" "vnet_gateway" {
     vpn_client_protocols = var.vpn_client_protocols
   }
 }
+
+resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
+  name                       = "vpn-diagnostic"
+  target_resource_id         = azurerm_virtual_network_gateway.vnet_gateway.id
+  log_analytics_workspace_id = var.log_analytics_workspace_id
+
+
+
+  metric {
+    category = "AllMetrics"
+  }
+}

@@ -4,63 +4,61 @@ variable "policy_name" {
 
 variable "resource_group_name" {
   type        = string
-  description = "resource group name"
+  description = "Resource group name."
 }
 
 variable "location" {
   type        = string
-  description = "location name"
+  description = "Location name."
 }
 
 variable "rule_collection_name" {
   type        = string
-  description = "rule collection name"
+  description = "Rule collection name."
 }
 
 variable "rule_collection_priority" {
   type        = number
-  description = "rule collection priority"
-}
-
-variable "network_rule_collection_name" {
-  type        = string
-  default     = null
-  description = "network rule collection name"
+  description = "Rule collection priority."
 }
 
 variable "network_rule_collection_priority" {
   type        = number
-  default     = null
-  description = "network rule collection name"
+  default     = 200
+  description = "Network rule collection name."
+}
+
+variable "network_rule_action" {
+  type = string
+  default = "Allow"
+  description = "Network rule action."
 }
 
 variable "network_rules" {
   type        = list(object({
-    name                  = string
     protocols             = list(string)
     source_addresses      = list(string)
     destination_addresses = list(string)
     destination_ports     = list(string)
   }))
   default     = []
-  description = "list of network rules"
-}
-
-variable "nat_rule_collection_name" {
-  type        = string
-  default     = null
-  description = "nat rule collection name"
+  description = "List of network rules."
 }
 
 variable "nat_rule_collection_priority" {
   type        = number
-  default     = null
-  description = "nat rule collection name"
+  default     = 100
+  description = "Nat rule collection name."
+}
+
+variable "nat_rule_action" {
+  type = string
+  default = "Allow"
+  description = "Nat rule action."
 }
 
 variable "nat_rules" {
   type        = list(object({
-    name                  = string
     protocols             = list(string)
     source_addresses      = list(string)
     destination_addresses = list(string)
@@ -69,24 +67,23 @@ variable "nat_rules" {
     translated_port       = string
   }))
   default     = []
-  description = "list of network rules"
-}
-
-variable "application_rule_collection_name" {
-  type        = string
-  default     = null
-  description = "nat rule collection name"
+  description = "List of network rules."
 }
 
 variable "application_rule_collection_priority" {
   type        = number
-  default     = null
-  description = "nat rule collection name"
+  default     = 300
+  description = "Nat rule collection name."
+}
+
+variable "application_rule_action" {
+  type = string
+  default = "Deny"
+  description = "Application rule action."
 }
 
 variable "application_rules" {
   type        = list(object({
-    name              = string
     protocols         = list(object({
       type = string
       port = number
@@ -95,6 +92,6 @@ variable "application_rules" {
     destination_fqdns = list(string)
   }))
   default     = []
-  description = "list of network rules"
+  description = "List of network rules."
 }
 

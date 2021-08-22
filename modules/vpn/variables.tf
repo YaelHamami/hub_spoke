@@ -10,27 +10,27 @@ variable "public_ip_name" {
 
 variable "location" {
   type        = string
-  description = "location name"
+  description = "Location name."
 }
 
 variable "resource_group_name" {
   type        = string
-  description = "resource group name"
+  description = "Resource group name."
 }
 
 variable "vnet_name" {
   type        = string
-  description = "name of virtual network that contains the firewall"
+  description = "Name of virtual network that contains the firewall."
 }
 
 variable "virtual_gateway_name" {
   type        = string
-  description = "virtual gateway name"
+  description = "virtual gateway name."
 }
 
 variable "client_address_space" {
   type    = list(string)
-  description = "the address space the client side use while using the vpn connection"
+  description = "The address space the client side use while using the vpn connection."
 }
 
 variable "aad_tenant" {
@@ -40,7 +40,7 @@ variable "aad_tenant" {
 
 variable "aad_audience" {
   type        = string
-  description = "Application ID of the Azure_VPN Azure AD Enterprise App"
+  description = "Application ID of the Azure_VPN Azure AD Enterprise App."
 }
 
 variable "aad_issuer" {
@@ -51,11 +51,16 @@ variable "aad_issuer" {
 variable "vpn_client_protocols" {
   type    = list(string)
   default = ["OpenVPN",]
-  description = "the protocol used for the vpn connection"
+  description = "The protocol used for the vpn connection."
 }
 
 variable "sku" {
   type        = string
   default     = "Standard"
   description = "gateway sku"
+}
+
+variable "log_analytics_workspace_id" {
+  type = string
+  description = "The workspace where all the vpn related logs are saved."
 }
