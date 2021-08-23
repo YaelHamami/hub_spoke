@@ -3,6 +3,11 @@ variable "subscription_id" {
   description = "Subscription ID."
 }
 
+variable "location" {
+  type = string
+  description = "The location of all the resources."
+}
+
 variable "admin_details" {
   type      = object({
     admin_username = string

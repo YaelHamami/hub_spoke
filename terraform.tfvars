@@ -1,4 +1,5 @@
 subscription_id = "d94fe338-52d8-4a44-acd4-4f8301adf2cf"
+location = "West Europe"
 admin_details   = {
   admin_username = "bob"
   admin_password = "Password1234!"

@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "spoke" {
   name     = local.prefixes.spoke_prefix
-  location = "West Europe"
+  location = var.location
 }
 
 resource "azurerm_virtual_network" "spoke_vnet" {

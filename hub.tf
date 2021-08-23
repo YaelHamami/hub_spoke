@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "hub" {
   name     = "${local.prefixes.hub_prefix}-rg"
-  location = "West Europe"
+  location = var.location
 }
 
 resource "azurerm_virtual_network" "hub_vnet" {
