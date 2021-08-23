@@ -1,5 +1,6 @@
 variable "policy_name" {
   type = string
+  description = "policy name"
 }
 
 variable "resource_group_name" {
@@ -10,16 +11,6 @@ variable "resource_group_name" {
 variable "location" {
   type        = string
   description = "Location name."
-}
-
-variable "rule_collection_name" {
-  type        = string
-  description = "Rule collection name."
-}
-
-variable "rule_collection_priority" {
-  type        = number
-  description = "Rule collection priority."
 }
 
 variable "network_rule_collection_priority" {
@@ -51,12 +42,6 @@ variable "nat_rule_collection_priority" {
   description = "Nat rule collection name."
 }
 
-variable "nat_rule_action" {
-  type = string
-  default = "Allow"
-  description = "Nat rule action."
-}
-
 variable "nat_rules" {
   type        = list(object({
     protocols             = list(string)
@@ -67,7 +52,7 @@ variable "nat_rules" {
     translated_port       = string
   }))
   default     = []
-  description = "List of network rules."
+  description = "List of nat rules."
 }
 
 variable "application_rule_collection_priority" {
@@ -92,6 +77,6 @@ variable "application_rules" {
     destination_fqdns = list(string)
   }))
   default     = []
-  description = "List of network rules."
+  description = "List of application rules."
 }
 

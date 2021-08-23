@@ -3,11 +3,6 @@ output "public_ip" {
   description = "The public ip address of the firewall."
 }
 
-output "subnet_id" {
-  value       = azurerm_subnet.azure_firewall_subnet.id
-  description = "The id of the subnet that contains the firewall."
-}
-
 output "private_ip" {
   value       = azurerm_firewall.firewall.ip_configuration[0].private_ip_address
   description = "The private ip address of the firewall."

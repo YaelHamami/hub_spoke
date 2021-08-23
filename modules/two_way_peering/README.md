@@ -2,7 +2,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 2.72.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 2.72.0 |
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -30,8 +30,8 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [azurerm_virtual_network_peering.local_to_remote_peering](https://registry.terraform.io/providers/hashicorp/azurerm/2.72.0/docs/resources/virtual_network_peering) | resource |
-| [azurerm_virtual_network_peering.spoke_hub](https://registry.terraform.io/providers/hashicorp/azurerm/2.72.0/docs/resources/virtual_network_peering) | resource |
+| [azurerm_virtual_network_peering.local_to_remote_peering](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering) | resource |
+| [azurerm_virtual_network_peering.spoke_hub](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering) | resource |
 ## Usage
  ```hcl
 module "local_remote_peering" {

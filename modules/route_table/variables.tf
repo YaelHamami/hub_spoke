@@ -5,7 +5,7 @@ variable "route_table_name" {
 
 variable "location" {
   type        = string
-  description = "Location name"
+  description = "The location of all the resources"
 }
 
 variable "resource_group_name" {
@@ -15,7 +15,7 @@ variable "resource_group_name" {
 
 variable "associated_subnet_id" {
   type        = string
-  description = "Associated subnet id"
+  description = "The subnet id of the associated subnet."
 }
 
 variable "routes" {
@@ -25,4 +25,5 @@ variable "routes" {
     next_hop_type              = string
     next_hop_ip_address        = optional(string)
   }))
+  description = "All the routes that go from the associated subnet out."
 }

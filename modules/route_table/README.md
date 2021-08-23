@@ -7,11 +7,11 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_associated_subnet_id"></a> [associated\_subnet\_id](#input\_associated\_subnet\_id) | Associated subnet id | `string` | n/a | yes |
-| <a name="input_location"></a> [location](#input\_location) | Location name | `string` | n/a | yes |
+| <a name="input_associated_subnet_id"></a> [associated\_subnet\_id](#input\_associated\_subnet\_id) | The subnet id of the associated subnet. | `string` | n/a | yes |
+| <a name="input_location"></a> [location](#input\_location) | The location of all the resources | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Resource group name | `string` | n/a | yes |
 | <a name="input_route_table_name"></a> [route\_table\_name](#input\_route\_table\_name) | Route table name | `string` | n/a | yes |
-| <a name="input_routes"></a> [routes](#input\_routes) | n/a | <pre>list(object({<br>    name                       = string<br>    destination_address_prefix = string<br>    next_hop_type              = string<br>    next_hop_ip_address        = optional(string)<br>  }))</pre> | n/a | yes |
+| <a name="input_routes"></a> [routes](#input\_routes) | All the routes that go from the associated subnet out. | <pre>list(object({<br>    name                       = string<br>    destination_address_prefix = string<br>    next_hop_type              = string<br>    next_hop_ip_address        = optional(string)<br>  }))</pre> | n/a | yes |
 ## Modules
 
 No modules.

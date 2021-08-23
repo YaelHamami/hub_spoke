@@ -1,11 +1,6 @@
-variable "subnet_address_prefixes" {
-  type        = list(string)
-  description = "the address prefixes of the gateway subnet"
-}
-
 variable "public_ip_name" {
   type        = string
-  description = "gateway public ip name"
+  description = "Public ip name of the local gateway."
 }
 
 variable "location" {
@@ -23,14 +18,19 @@ variable "vnet_name" {
   description = "Name of virtual network that contains the firewall."
 }
 
+variable "subnet_id" {
+  type = string
+  description = "The id of the GatewaySubnet"
+}
+
 variable "virtual_gateway_name" {
   type        = string
-  description = "virtual gateway name."
+  description = "The name of the Virtual Network Gateway. Changing the name forces a new resource to be created."
 }
 
 variable "client_address_space" {
-  type    = list(string)
-  description = "The address space the client side use while using the vpn connection."
+  type        = list(string)
+  description = "The address space the client side uses while using the vpn connection."
 }
 
 variable "aad_tenant" {
@@ -40,7 +40,7 @@ variable "aad_tenant" {
 
 variable "aad_audience" {
   type        = string
-  description = "Application ID of the Azure_VPN Azure AD Enterprise App."
+  description = "The client id of the Azure VPN application. See Create an Active Directory (AD) tenant for P2S OpenVPN protocol connections for values."
 }
 
 variable "aad_issuer" {
@@ -49,13 +49,13 @@ variable "aad_issuer" {
 }
 
 variable "vpn_client_protocols" {
-  type    = list(string)
-  default = ["OpenVPN",]
-  description = "The protocol used for the vpn connection."
+  type        = list(string)
+  default     = ["OpenVPN",]
+  description = " List of the protocols supported by the vpn client. The supported values are SSTP, IkeV2 and OpenVPN. Values SSTP and IkeV2 are incompatible with the use of aad_tenant, aad_audience and aad_issuer."
 }
 
 variable "sku" {
   type        = string
   default     = "Standard"
-  description = "gateway sku"
+  description = "Configuration of the size and capacity of the virtual network gateway. Valid options are Basic, Standard, HighPerformance, UltraPerformance, ErGw1AZ, ErGw2AZ, ErGw3AZ, VpnGw1, VpnGw2, VpnGw3, VpnGw4,VpnGw5, VpnGw1AZ, VpnGw2AZ, VpnGw3AZ,VpnGw4AZ and VpnGw5AZ and depend on the type, vpn_type and generation arguments."
 }

@@ -1,47 +1,37 @@
 variable "location" {
   type        = string
-  description = "location name"
+  description = "The location of all the resources"
 }
 
 variable "resource_group_name" {
   type        = string
-  description = "resource group name"
+  description = "Resource group name."
 }
 
 variable "vnet_name" {
   type        = string
-  description = "name of virtual network that contains the firewall"
+  description = "Name of virtual network that contains the firewall."
 }
 
 variable "firewall_name" {
   type        = string
-  description = "firewall name"
+  description = "Firewall name."
 }
 
-variable "address_prefixes" {
-  type        = list(string)
-  description = "firewall address prefixes"
+variable "firewall_subnet_id" {
+  type = string
+  description = "The id of the AzureFirewallSubnet."
 }
 
 variable "policy_name" {
   type = string
-  description = "policy name"
-}
-
-variable "rule_collection_name" {
-  type = string
-  description = "rule collection name"
-}
-
-variable "rule_collection_priority" {
-  type = number
-  description = "rule collection priority"
+  description = "Policy name."
 }
 
 variable "network_rule_collection_priority" {
   type        = number
   default     = 200
-  description = "network rule collection name"
+  description = "Network rule collection name."
 }
 
 variable "network_rules" {
@@ -52,13 +42,13 @@ variable "network_rules" {
     destination_ports     = list(string)
   }))
   default     = null
-  description = "list of network rules"
+  description = "List of network rules."
 }
 
 variable "nat_rule_collection_priority" {
   type        = number
   default     = 100
-  description = "nat rule collection name"
+  description = "Nat rule collection name."
 }
 
 variable "nat_rules" {
@@ -72,13 +62,13 @@ variable "nat_rules" {
     translated_port       = string
   }))
   default     = []
-  description = "list of network rules"
+  description = "List of nat rules."
 }
 
 variable "application_rule_collection_priority" {
   type        = number
   default     = 300
-  description = "nat rule collection name"
+  description = "Nat rule collection name."
 }
 
 variable "application_rules" {
@@ -92,7 +82,7 @@ variable "application_rules" {
     destination_fqdns = list(string)
   }))
   default     = []
-  description = "list of network rules"
+  description = "List of application rules."
 }
 
 variable "log_analytics_workspace_id" {
@@ -103,18 +93,12 @@ variable "log_analytics_workspace_id" {
 variable "network_rule_action" {
   type = string
   default = "Allow"
-  description = "Network rule action."
-}
-
-variable "nat_rule_action" {
-  type = string
-  default = "Allow"
-  description = "Nat rule action."
+  description = "Network rule action (Deny, Allow)."
 }
 
 variable "application_rule_action" {
   type = string
   default = "Deny"
-  description = "Application rule action."
+  description = "Application rule action (Deny, Allow)."
 }
 

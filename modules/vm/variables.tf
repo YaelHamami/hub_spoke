@@ -9,7 +9,7 @@ variable "vm_name" {
 
 variable "location" {
   type        = string
-  description = "Nic's location."
+  description = "All the resources location."
 }
 
 variable "subnet_id" {
@@ -31,26 +31,29 @@ variable "private_ip_type" {
 variable "vm_size" {
   type        = string
   default     = "Standard_F2"
-  description = "The size of the vm."
+  description = "Specifies the size of the Virtual Machine. See also Azure VM Naming Conventions."
 }
 
-variable "os_profile" {
-  type        = object({
-    admin_username = string
-    admin_password = string
-  })
-  description = "The profile of the admin user in the vm."
+variable "admin_username" {
+  type        = string
+  description = "The username of the local administrator used for the Virtual Machine. Changing this forces a new resource to be created."
+  sensitive   = true
+}
+
+variable "admin_password" {
+  type        = string
+  description = "The Password which should be used for the local-administrator on this Virtual Machine. Changing this forces a new resource to be created."
   sensitive   = true
 }
 
 variable "storage_data_disks" {
   type        = list(object({
-    managed_disk_type = string
-    create_option     = string
-    disk_size_gb      = string
+    storage_account_type = string
+    create_option        = string
+    disk_size_gb         = string
   }))
   default     = []
-  description = "List of the vm's data disks."
+  description = "List of the vm's data disks. create_option - (Required) Specifies how the data disk should be created. Possible values are Attach, FromImage and Empty. disk_size_gb - (Required) Specifies the size of the data disk in gigabytes.caching - (Optional) Specifies the caching requirements."
 }
 
 variable "storage_image_reference" {
@@ -66,13 +69,13 @@ variable "storage_image_reference" {
     sku       = "16.04-LTS"
     version   = "latest"
   }
-  description = "Specifies the image from which the vm is created."
+  description = "This block provisions the Virtual Machine from one of two sources: an Azure Platform Image (e.g. Ubuntu/Windows Server) or a Custom Image."
 }
 
-variable "os_disk_type" {
+variable "storage_account_type" {
   type        = string
   default     = "Standard_LRS"
-  description = "The type of the os disk."
+  description = "The Type of Storage Account which should back this the Internal OS Disk. Possible values are Standard_LRS, StandardSSD_LRS and Premium_LRS. Changing this forces a new resource to be created."
 }
 
 variable "computer_name" {
@@ -81,8 +84,3 @@ variable "computer_name" {
   default     = null
 }
 
-variable "is_linux" {
-  type = bool
-  default = true
-  description = "Is the type of the vm is linux."
-}
