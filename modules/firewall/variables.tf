@@ -23,7 +23,7 @@ variable "firewall_subnet_id" {
   description = "The id of the AzureFirewallSubnet."
 }
 
-variable "policy_name" {
+variable "firewall_policy_name" {
   type = string
   description = "Policy name."
 }

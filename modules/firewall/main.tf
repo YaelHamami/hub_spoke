@@ -9,7 +9,7 @@ resource "azurerm_public_ip" "firewall_public_ip" {
 module "policy" {
   source                               = "../firewall_policy"
   location                             = var.location
-  policy_name                          = var.policy_name
+  policy_name                          = var.firewall_policy_name
   resource_group_name                  = var.resource_group_name
   network_rule_collection_priority     = var.network_rule_collection_priority
   network_rules                        = var.network_rules

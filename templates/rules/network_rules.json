@@ -1,0 +1,17 @@
+{
+  "rules": [
+    {
+      "protocols": [
+        "ICMP",
+        "TCP"
+      ],
+      "source_addresses": ["${vpn_client_address_space}"],
+      "destination_addresses": [
+        "*"
+      ],
+      "destination_ports": [
+        "22"
+      ]
+    }
+  ]
+}

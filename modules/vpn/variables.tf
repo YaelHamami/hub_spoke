@@ -1,8 +1,3 @@
-variable "public_ip_name" {
-  type        = string
-  description = "Public ip name of the local gateway."
-}
-
 variable "location" {
   type        = string
   description = "Location name."

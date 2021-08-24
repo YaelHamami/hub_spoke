@@ -12,7 +12,6 @@
 | <a name="input_aad_tenant"></a> [aad\_tenant](#input\_aad\_tenant) | https://login.microsoftonline.com/{AzureAD TenantID} | `string` | n/a | yes |
 | <a name="input_client_address_space"></a> [client\_address\_space](#input\_client\_address\_space) | The address space the client side uses while using the vpn connection. | `list(string)` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | Location name. | `string` | n/a | yes |
-| <a name="input_public_ip_name"></a> [public\_ip\_name](#input\_public\_ip\_name) | Public ip name of the local gateway. | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Resource group name. | `string` | n/a | yes |
 | <a name="input_sku"></a> [sku](#input\_sku) | Configuration of the size and capacity of the virtual network gateway. Valid options are Basic, Standard, HighPerformance, UltraPerformance, ErGw1AZ, ErGw2AZ, ErGw3AZ, VpnGw1, VpnGw2, VpnGw3, VpnGw4,VpnGw5, VpnGw1AZ, VpnGw2AZ, VpnGw3AZ,VpnGw4AZ and VpnGw5AZ and depend on the type, vpn\_type and generation arguments. | `string` | `"Standard"` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | The id of the GatewaySubnet | `string` | n/a | yes |

@@ -1,0 +1,10 @@
+{
+  "spoke_routes": [
+    {
+      "name": "ToOnPremiseBySpokeVM",
+      "destination_address_prefix": "${destination_address_prefix}",
+      "next_hop_type": "VirtualAppliance",
+      "next_hop_ip_address": "${firewall_private_ip}"
+    }
+  ]
+}
