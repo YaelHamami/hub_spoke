@@ -11,6 +11,7 @@
 | <a name="input_admin_username"></a> [admin\_username](#input\_admin\_username) | The username of the local administrator used for the Virtual Machine. Changing this forces a new resource to be created. | `string` | n/a | yes |
 | <a name="input_computer_name"></a> [computer\_name](#input\_computer\_name) | The host name of the vm. | `string` | `null` | no |
 | <a name="input_location"></a> [location](#input\_location) | All the resources location. | `string` | n/a | yes |
+| <a name="input_prefix"></a> [prefix](#input\_prefix) | The prefix of certain values in the vm module. | `string` | n/a | yes |
 | <a name="input_private_ip_type"></a> [private\_ip\_type](#input\_private\_ip\_type) | Is the private ip address is Dynamic or Static. | `string` | `"Dynamic"` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Resource group name. | `string` | n/a | yes |
 | <a name="input_storage_account_type"></a> [storage\_account\_type](#input\_storage\_account\_type) | The Type of Storage Account which should back this the Internal OS Disk. Possible values are Standard\_LRS, StandardSSD\_LRS and Premium\_LRS. Changing this forces a new resource to be created. | `string` | `"Standard_LRS"` | no |
@@ -29,12 +30,13 @@ No modules.
 | [azurerm_linux_virtual_machine.vm](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine) | resource |
 | [azurerm_managed_disk.vm_managed_disk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/managed_disk) | resource |
 | [azurerm_network_interface.nic](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface) | resource |
-| [azurerm_virtual_machine_data_disk_attachment.example](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_data_disk_attachment) | resource |
+| [azurerm_virtual_machine_data_disk_attachment.data_disk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_data_disk_attachment) | resource |
 ## Usage
  ```hcl
 module "ubuntu_vm_spoke" {
-  vm_name             = "vm"
   source              = "./modules/vm"
+  prefix              = local.vm_prefix
+  vm_name             = "vm"
   location            = azurerm_resource_group.spoke.location
   resource_group_name = azurerm_resource_group.spoke.name
   subnet_id           = tolist(azurerm_virtual_network.spoke_vnet.subnet)[0].id

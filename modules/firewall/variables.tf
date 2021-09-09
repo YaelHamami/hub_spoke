@@ -1,3 +1,8 @@
+variable "prefix" {
+  type = string
+  description = "The prefix of certain values in the firewall module."
+}
+
 variable "location" {
   type        = string
   description = "The location of all the resources"

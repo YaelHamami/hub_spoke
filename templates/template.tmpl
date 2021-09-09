@@ -28,11 +28,3 @@ All spoke routs:
     %{ endfor }
 %{ endfor }
 
-storage data disks:
-%{ for disk in storage-data-disks ~}
-    disk:
-    %{ for key, value in "${disk}"}
-        ${key}: ${value}
-    %{ endfor }
-%{ endfor }
-

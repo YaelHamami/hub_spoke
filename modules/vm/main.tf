@@ -1,9 +1,5 @@
-locals {
-  local_prefix = var.vm_name
-}
-
 resource "azurerm_network_interface" "nic" {
-  name                = "${local.local_prefix}-nic"
+  name                = "${var.prefix}-nic"
   location            = var.location
   resource_group_name = var.resource_group_name
 
@@ -15,7 +11,7 @@ resource "azurerm_network_interface" "nic" {
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
-  name                            = "${local.local_prefix}-vm"
+  name                            = "${var.prefix}-vm"
   resource_group_name             = var.resource_group_name
   location                        = var.location
   size                            = var.vm_size
@@ -40,7 +36,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
 resource "azurerm_managed_disk" "vm_managed_disk" {
   count = length(var.storage_data_disks)
-  name                 = "${local.local_prefix}-disk${count.index + 1}"
+  name                 = "${var.prefix}-disk${count.index + 1}"
   location             = var.location
   resource_group_name  = var.resource_group_name
   storage_account_type = var.storage_data_disks[count.index].storage_account_type
@@ -48,7 +44,7 @@ resource "azurerm_managed_disk" "vm_managed_disk" {
   disk_size_gb         = var.storage_data_disks[count.index].disk_size_gb
 }
 
-resource "azurerm_virtual_machine_data_disk_attachment" "example" {
+resource "azurerm_virtual_machine_data_disk_attachment" "data_disk" {
   count = length(var.storage_data_disks)
   managed_disk_id    = azurerm_managed_disk.vm_managed_disk[count.index].id
   virtual_machine_id = azurerm_linux_virtual_machine.vm.id

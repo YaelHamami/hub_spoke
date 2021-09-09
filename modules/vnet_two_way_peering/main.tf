@@ -9,7 +9,7 @@ resource "azurerm_virtual_network_peering" "local_to_remote" {
   allow_virtual_network_access = var.local_remote_allow_virtual_network_access
 }
 
-resource "azurerm_virtual_network_peering" "remote_to_local" {
+resource "azurerm_virtual_network_peering" "hub_spoke_peering" {
   name                         = "${var.remote_vnet_name}-to-${var.local_vnet_name}"
   resource_group_name          = var.remote_local_resource_group_name
   virtual_network_name         = var.remote_vnet_name

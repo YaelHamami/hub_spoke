@@ -1,3 +1,8 @@
+variable "prefix" {
+  type = string
+  description = "The prefix of certain values in the vpn module"
+}
+
 variable "location" {
   type        = string
   description = "Location name."

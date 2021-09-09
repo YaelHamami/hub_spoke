@@ -12,6 +12,7 @@
 | <a name="input_aad_tenant"></a> [aad\_tenant](#input\_aad\_tenant) | https://login.microsoftonline.com/{AzureAD TenantID} | `string` | n/a | yes |
 | <a name="input_client_address_space"></a> [client\_address\_space](#input\_client\_address\_space) | The address space the client side uses while using the vpn connection. | `list(string)` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | Location name. | `string` | n/a | yes |
+| <a name="input_prefix"></a> [prefix](#input\_prefix) | The prefix of certain values in the vpn module | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Resource group name. | `string` | n/a | yes |
 | <a name="input_sku"></a> [sku](#input\_sku) | Configuration of the size and capacity of the virtual network gateway. Valid options are Basic, Standard, HighPerformance, UltraPerformance, ErGw1AZ, ErGw2AZ, ErGw3AZ, VpnGw1, VpnGw2, VpnGw3, VpnGw4,VpnGw5, VpnGw1AZ, VpnGw2AZ, VpnGw3AZ,VpnGw4AZ and VpnGw5AZ and depend on the type, vpn\_type and generation arguments. | `string` | `"Standard"` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | The id of the GatewaySubnet | `string` | n/a | yes |
@@ -30,19 +31,20 @@ No modules.
 ## Usage
  ```hcl
 module "vpn" {
-  source                  = "./modules/vpn"
-  location                = azurerm_resource_group.hub.location
-  resource_group_name     = azurerm_resource_group.hub.name
-  vnet_name               = azurerm_virtual_network.hub_vnet.name
-  public_ip_name          = "gateway-public-ip"
-  subnet_address_prefixes = ["10.1.0.128/27"]
-  client_address_space    = ["192.168.0.0/24"]
-  virtual_gateway_name    = "virtual-gateway"
+  source                     = "./modules/vpn"
+  prefix                     = local.vpn_prefix
+  location                   = azurerm_resource_group.hub.location
+  resource_group_name        = azurerm_resource_group.hub.name
+  vnet_name                  = azurerm_virtual_network.hub_vnet.name
+  public_ip_name             = "gateway-public-ip"
+  subnet_address_prefixes    = ["10.1.0.128/27"]
+  client_address_space       = ["192.168.0.0/24"]
+  virtual_gateway_name       = "virtual-gateway"
   log_analytics_workspace_id = azurerm_log_analytics_workspace.logs.id
-  aad_tenant              = "https://login.microsoftonline.com/${var.tenant_id}"
-  aad_audience            = var.audience_id
-  aad_issuer              = "https://sts.windows.net/${var.tenant_id}/"
-  depends_on              = [
+  aad_tenant                 = "https://login.microsoftonline.com/${var.tenant_id}"
+  aad_audience               = var.audience_id
+  aad_issuer                 = "https://sts.windows.net/${var.tenant_id}/"
+  depends_on                 = [
     azurerm_virtual_network.hub_vnet,
   ]
 }

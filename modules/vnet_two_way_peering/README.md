@@ -28,8 +28,8 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [azurerm_virtual_network_peering.hub_spoke_peering](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering) | resource |
 | [azurerm_virtual_network_peering.local_to_remote](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering) | resource |
-| [azurerm_virtual_network_peering.remote_to_local](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering) | resource |
 ## Usage
  ```hcl
 module "local_remote_peering" {

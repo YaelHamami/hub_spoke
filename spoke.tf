@@ -1,5 +1,36 @@
+locals {
+  spoke_resource_group_name = "daniel-spoke-rg"
+
+  vm_prefix = "vm"
+
+  spoke_vnet_address_space = ["10.0.0.0/24"]
+  spoke_vnet_dns_servers   = ["10.0.0.4", "10.0.0.5"]
+
+  spoke_subnet_name             = "spoke-subnet"
+  spoke_subnet_address_prefixes = ["10.0.0.0/24"]
+
+  spoke_route_table_name = "spoke-route-table"
+  spoke_routes           = jsondecode(templatefile("./templates/routes/spoke_routes.json", {
+    "destination_address_prefix" = module.vpn.client_address_space
+    "firewall_private_ip"        = module.firewall.private_ip
+  })).spoke_routes
+
+  storage_data_disks = [
+    {
+      storage_account_type = "Standard_LRS"
+      create_option        = "Empty"
+      disk_size_gb         = 1023
+    },
+    {
+      storage_account_type = "Standard_LRS"
+      create_option        = "Empty"
+      disk_size_gb         = 1023
+    }
+  ]
+}
+
 resource "azurerm_resource_group" "spoke" {
-  name     = local.prefixes.spoke_prefix
+  name     = local.spoke_resource_group_name
   location = local.location
 }
 
@@ -21,12 +52,13 @@ resource "azurerm_subnet" "spoke_subnet" {
 
 module "ubuntu_vm_spoke" {
   source              = "./modules/vm"
-  vm_name             = local.spoke_vm_name
+  prefix              = local.vm_prefix
+  vm_name             = var.spoke_vm_name
   location            = azurerm_resource_group.spoke.location
   resource_group_name = azurerm_resource_group.spoke.name
   subnet_id           = azurerm_subnet.spoke_subnet.id
-  admin_username      = var.admin_details.admin_username
-  admin_password      = var.admin_details.admin_password
+  admin_username      = var.admin_username
+  admin_password      = var.admin_password
   storage_data_disks  = local.storage_data_disks
 }
 
@@ -38,12 +70,15 @@ module "spoke_route_table" {
   route_table_name     = local.spoke_route_table_name
   routes               = local.spoke_routes
   associated_subnet_id = azurerm_subnet.spoke_subnet.id
-  depends_on           = [module.firewall, module.vpn]
+  depends_on           = [
+    azurerm_subnet.spoke_subnet,
+    azurerm_subnet.gateway_subnet,
+    azurerm_subnet.azure_firewall_subnet]
 }
 
-module "local_remote" {
-  source                              = "./modules/two_way_peering"
-  local_vnet_name                  = azurerm_virtual_network.spoke_vnet.name
+module "hub_spoke_two_way_peering" {
+  source                              = "./modules/vnet_two_way_peering"
+  local_vnet_name                     = azurerm_virtual_network.spoke_vnet.name
   local_vnet_id                       = azurerm_virtual_network.spoke_vnet.id
   local_to_remote_resource_group_name = azurerm_virtual_network.spoke_vnet.resource_group_name
   local_remote_use_remote_gateways    = true

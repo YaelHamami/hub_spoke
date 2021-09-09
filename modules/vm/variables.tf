@@ -1,3 +1,8 @@
+variable "prefix" {
+  type = string
+  description = "The prefix of certain values in the vm module."
+}
+
 variable "vm_name" {
   type        = string
   description = "The virtual machine name."

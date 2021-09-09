@@ -1,5 +1,5 @@
 resource "azurerm_public_ip" "public_ip" {
-  name                = "gateway_public_ip"
+  name                = "${var.prefix}_public_ip"
   location            = var.location
   resource_group_name = var.resource_group_name
   allocation_method   = "Dynamic"

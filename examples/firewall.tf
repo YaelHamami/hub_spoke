@@ -1,5 +1,6 @@
 module "firewall" {
   source                     = "relative/path/to-file"
+  prefix                     = local.firewall
   firewall_name              = "firewall"
   location                   = azurerm_resource_group.hub.location
   resource_group_name        = azurerm_resource_group.hub.name

@@ -1,6 +1,7 @@
 module "ubuntu_vm_spoke" {
-  vm_name             = "vm"
   source              = "./modules/vm"
+  prefix              = local.vm_prefix
+  vm_name             = "vm"
   location            = azurerm_resource_group.spoke.location
   resource_group_name = azurerm_resource_group.spoke.name
   subnet_id           = tolist(azurerm_virtual_network.spoke_vnet.subnet)[0].id
