@@ -1,4 +1,5 @@
 *.hcl
 *.terraform
 *.tfstate*
+*.tfvars
 .idea*

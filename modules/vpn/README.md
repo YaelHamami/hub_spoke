@@ -12,7 +12,6 @@
 | <a name="input_aad_tenant"></a> [aad\_tenant](#input\_aad\_tenant) | https://login.microsoftonline.com/{AzureAD TenantID} | `string` | n/a | yes |
 | <a name="input_client_address_space"></a> [client\_address\_space](#input\_client\_address\_space) | The address space the client side uses while using the vpn connection. | `list(string)` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | Location name. | `string` | n/a | yes |
-| <a name="input_prefix"></a> [prefix](#input\_prefix) | The prefix of certain values in the vpn module | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Resource group name. | `string` | n/a | yes |
 | <a name="input_sku"></a> [sku](#input\_sku) | Configuration of the size and capacity of the virtual network gateway. Valid options are Basic, Standard, HighPerformance, UltraPerformance, ErGw1AZ, ErGw2AZ, ErGw3AZ, VpnGw1, VpnGw2, VpnGw3, VpnGw4,VpnGw5, VpnGw1AZ, VpnGw2AZ, VpnGw3AZ,VpnGw4AZ and VpnGw5AZ and depend on the type, vpn\_type and generation arguments. | `string` | `"Standard"` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | The id of the GatewaySubnet | `string` | n/a | yes |
@@ -56,4 +55,4 @@ module "vpn" {
 | <a name="output_client_address_space"></a> [client\_address\_space](#output\_client\_address\_space) | The address space the client uses to communicate with the other networks. |
 | <a name="output_id"></a> [id](#output\_id) | The vpn gateway id. |
 | <a name="output_name"></a> [name](#output\_name) | The vpn gateway name |
-| <a name="output_vpn_gateway"></a> [vpn\_gateway](#output\_vpn\_gateway) | The full vpn gateway. |
+| <a name="output_object"></a> [object](#output\_object) | The full vpn gateway. |

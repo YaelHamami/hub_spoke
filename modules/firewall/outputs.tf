@@ -8,7 +8,7 @@ output "private_ip" {
   description = "The private ip address of the firewall."
 }
 
-output "firewall" {
+output "object" {
   value = azurerm_firewall.firewall
   description = "The full firewall object."
 }

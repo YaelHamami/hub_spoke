@@ -1,5 +1,5 @@
 resource "azurerm_public_ip" "firewall_public_ip" {
-  name                = "${var.prefix}-public-ip"
+  name                = "${var.name}-public-ip"
   resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = "Static"
@@ -22,7 +22,7 @@ module "policy" {
 }
 
 resource "azurerm_firewall" "firewall" {
-  name                = var.firewall_name
+  name                = var.name
   location            = var.location
   resource_group_name = var.resource_group_name
   firewall_policy_id  = module.policy.id
@@ -35,7 +35,7 @@ resource "azurerm_firewall" "firewall" {
 }
 
 resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
-  name                       = "${var.prefix}-diagnostic"
+  name                       = "${var.name}-diagnostic"
   target_resource_id         = azurerm_firewall.firewall.id
   log_analytics_workspace_id = var.log_analytics_workspace_id
 

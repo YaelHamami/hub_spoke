@@ -1,4 +1,4 @@
-output "route_table" {
+output "object" {
   value = azurerm_route_table.route_table
   description = "The full route table object."
 }

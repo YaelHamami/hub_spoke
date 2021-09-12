@@ -1,8 +1,3 @@
-variable "prefix" {
-  type = string
-  description = "The prefix of certain values in the firewall module."
-}
-
 variable "location" {
   type        = string
   description = "The location of all the resources"
@@ -18,18 +13,18 @@ variable "vnet_name" {
   description = "Name of virtual network that contains the firewall."
 }
 
-variable "firewall_name" {
+variable "name" {
   type        = string
   description = "Firewall name."
 }
 
 variable "firewall_subnet_id" {
-  type = string
+  type        = string
   description = "The id of the AzureFirewallSubnet."
 }
 
 variable "firewall_policy_name" {
-  type = string
+  type        = string
   description = "Policy name."
 }
 
@@ -41,6 +36,7 @@ variable "network_rule_collection_priority" {
 
 variable "network_rules" {
   type        = list(object({
+    name                  = string
     protocols             = list(string)
     source_addresses      = list(string)
     destination_addresses = list(string)
@@ -91,19 +87,19 @@ variable "application_rules" {
 }
 
 variable "log_analytics_workspace_id" {
-  type = string
+  type        = string
   description = "Log analytics workspace id."
 }
 
 variable "network_rule_action" {
-  type = string
-  default = "Allow"
+  type        = string
+  default     = "Allow"
   description = "Network rule action (Deny, Allow)."
 }
 
 variable "application_rule_action" {
-  type = string
-  default = "Deny"
+  type        = string
+  default     = "Deny"
   description = "Application rule action (Deny, Allow)."
 }
 

@@ -8,9 +8,9 @@ variable "local_vnet_name" {
   description = "The name of the local vnet."
 }
 
-variable "remote_vnet_id" {
+variable "local_vnet_id" {
   type = string
-  description = "The id of the remote vnet."
+  description = "The id of the local vnet."
 }
 
 variable "local_remote_allow_gateway_transit" {
@@ -22,7 +22,7 @@ variable "local_remote_allow_gateway_transit" {
 variable "local_remote_use_remote_gateways" {
   type = bool
   default = false
-  description = "Does the peering of the local vnet to the remote vnet remote use's remote gateways."
+  description = "Does the peering of the local vnet to the remote vnet remote use's remote gateways. For it to work the remote gateway must allow gateway transit."
 }
 
 variable "local_remote_allow_forwarded_traffic" {
@@ -47,9 +47,9 @@ variable "remote_vnet_name" {
   description = "The name of the second vnet."
 }
 
-variable "local_vnet_id" {
+variable "remote_vnet_id" {
   type = string
-  description = "The id of the local vnet."
+  description = "The id of the remote vnet."
 }
 
 variable "remote_local_allow_gateway_transit" {
@@ -61,7 +61,7 @@ variable "remote_local_allow_gateway_transit" {
 variable "remote_local_use_remote_gateways" {
   type = bool
   default = false
-  description = "Does the peering from remote to local use remote gateways."
+  description = "Does the peering from remote to local use remote gateways. For it to work the local gateway must allow gateway transit."
 }
 
 variable "remote_local_allow_forwarded_traffic" {

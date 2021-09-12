@@ -1,5 +1,5 @@
 variable "policy_name" {
-  type = string
+  type        = string
   description = "policy name"
 }
 
@@ -20,13 +20,14 @@ variable "network_rule_collection_priority" {
 }
 
 variable "network_rule_action" {
-  type = string
-  default = "Allow"
+  type        = string
+  default     = "Allow"
   description = "Network rule action."
 }
 
 variable "network_rules" {
   type        = list(object({
+    name                  = string
     protocols             = list(string)
     source_addresses      = list(string)
     destination_addresses = list(string)
@@ -44,6 +45,7 @@ variable "nat_rule_collection_priority" {
 
 variable "nat_rules" {
   type        = list(object({
+    name                  = string
     protocols             = list(string)
     source_addresses      = list(string)
     destination_addresses = list(string)
@@ -62,13 +64,14 @@ variable "application_rule_collection_priority" {
 }
 
 variable "application_rule_action" {
-  type = string
-  default = "Deny"
+  type        = string
+  default     = "Deny"
   description = "Application rule action."
 }
 
 variable "application_rules" {
   type        = list(object({
+    name              = string
     protocols         = list(object({
       type = string
       port = number

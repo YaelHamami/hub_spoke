@@ -1,11 +1,14 @@
 {
   "rules": [
     {
+      "name": "AllowAll",
       "protocols": [
         "ICMP",
         "TCP"
       ],
-      "source_addresses": ["${vpn_client_address_space}"],
+      "source_addresses": [
+        "${vpn_client_address_space}"
+      ],
       "destination_addresses": [
         "*"
       ],
