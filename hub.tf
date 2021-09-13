@@ -6,7 +6,6 @@ locals {
   hub_vnet_name          = "${local.hub_prefix}-vnet"
   hub_address_space      = ["10.1.0.0/24"]
   hub_vnet_address_space = ["10.1.0.0/24"]
-  hub_vnet_dns_servers   = ["10.1.0.4", "10.1.0.5"]
 
   firewall_subnet_address_prefixes = ["10.1.0.0/26"]
 
@@ -33,6 +32,7 @@ locals {
   })).hub_gateway_routes
 
   hub_route_table_name = "${local.hub_prefix}-route-table"
+  log_retention_in_days   = 30
 }
 
 resource "azurerm_resource_group" "hub" {
@@ -65,7 +65,7 @@ resource "azurerm_log_analytics_workspace" "logs" {
   location            = azurerm_resource_group.hub.location
   resource_group_name = azurerm_resource_group.hub.name
   sku                 = local.log_workspace_sku
-  retention_in_days   = 30
+  retention_in_days   = local.log_retention_in_days
 }
 
 module "firewall" {

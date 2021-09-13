@@ -5,7 +5,7 @@ resource "azurerm_firewall_policy" "policy" {
 }
 
 resource "azurerm_firewall_policy_rule_collection_group" "network_rule_collection_group" {
-  for_each           = length(var.network_rules) > 0 ? toset([""]) : []
+  count              = length(var.network_rules) > 0 ? 1 : 0
   name               = "network"
   firewall_policy_id = azurerm_firewall_policy.policy.id
   priority           = var.network_rule_collection_priority
@@ -28,7 +28,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "network_rule_collectio
 }
 
 resource "azurerm_firewall_policy_rule_collection_group" "nat_rule_collection_group" {
-  for_each           = length(var.nat_rules) > 0 ? toset([""]) : []
+  count              = length(var.nat_rules) > 0 ? 1 : 0
   name               = "nat"
   firewall_policy_id = azurerm_firewall_policy.policy.id
   priority           = var.nat_rule_collection_priority
@@ -55,7 +55,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "nat_rule_collection_gr
 
 
 resource "azurerm_firewall_policy_rule_collection_group" "application_rule_collection_group" {
-  for_each           = length(var.application_rules) > 0 ? toset([""]) : []
+  count              = length(var.application_rules) > 0 ? 1 : 0
   name               = "application"
   firewall_policy_id = azurerm_firewall_policy.policy.id
   priority           = var.application_rule_collection_priority

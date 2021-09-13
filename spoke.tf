@@ -44,6 +44,7 @@ module "spoke_vnet" {
     name             = local.spoke_subnet_name
     address_prefixes = local.spoke_vnet_address_space
   }]
+  depends_on = [azurerm_resource_group.spoke]
 }
 
 module "ubuntu_vm_spoke" {

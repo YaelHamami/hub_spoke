@@ -23,6 +23,11 @@ variable "firewall_subnet_id" {
   description = "The id of the AzureFirewallSubnet."
 }
 
+variable "log_analytics_workspace_id" {
+  type        = string
+  description = "Log analytics workspace id."
+}
+
 variable "firewall_policy_name" {
   type        = string
   description = "Policy name."
@@ -44,6 +49,12 @@ variable "network_rules" {
   }))
   default     = null
   description = "List of network rules."
+}
+
+variable "network_rule_action" {
+  type        = string
+  default     = "Allow"
+  description = "Network rule action (Deny, Allow)."
 }
 
 variable "nat_rule_collection_priority" {
@@ -84,17 +95,6 @@ variable "application_rules" {
   }))
   default     = []
   description = "List of application rules."
-}
-
-variable "log_analytics_workspace_id" {
-  type        = string
-  description = "Log analytics workspace id."
-}
-
-variable "network_rule_action" {
-  type        = string
-  default     = "Allow"
-  description = "Network rule action (Deny, Allow)."
 }
 
 variable "application_rule_action" {

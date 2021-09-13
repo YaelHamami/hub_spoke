@@ -10,7 +10,7 @@
 | <a name="input_admin_password"></a> [admin\_password](#input\_admin\_password) | The login password of the admin user in the vm. | `string` | n/a | yes |
 | <a name="input_admin_username"></a> [admin\_username](#input\_admin\_username) | The login username of the admin user in the vm. | `string` | n/a | yes |
 | <a name="input_audience"></a> [audience](#input\_audience) | The client id of the Azure VPN application. See Create an Active Directory (AD) tenant for P2S OpenVPN protocol connections for values This setting is incompatible with the use of root\_certificate and revoked\_certificate, radius\_server\_address, and radius\_server\_secret. | `string` | n/a | yes |
-| <a name="input_spoke_vm_name"></a> [spoke\_vm\_name](#input\_spoke\_vm\_name) | The vm name | `string` | n/a | yes |
+| <a name="input_spoke_vm_name"></a> [spoke\_vm\_name](#input\_spoke\_vm\_name) | The vm name. | `string` | n/a | yes |
 | <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | The value of the Azure Subscription ID. | `string` | n/a | yes |
 | <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | The value of the Azure Tenant ID. | `string` | n/a | yes |
 ## Modules
