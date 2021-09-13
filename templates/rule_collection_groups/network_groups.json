@@ -1,0 +1,33 @@
+{
+  "network_rule_collection_group": [
+    {
+      "name": "network_rule_collection_group",
+      "priority": 200,
+      "rule_collections": [
+        {
+          "name": "first_rule_collection",
+          "priority": 200,
+          "action": "Allow",
+          "rules": [
+            {
+              "name": "AllowAll",
+              "protocols": [
+                "ICMP",
+                "TCP"
+              ],
+              "source_addresses": [
+                "${vpn_client_address_space}"
+              ],
+              "destination_addresses": [
+                "*"
+              ],
+              "destination_ports": [
+                "22"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

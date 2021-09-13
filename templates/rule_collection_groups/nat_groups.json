@@ -1,0 +1,33 @@
+{
+  "nat_rule_collection_group": [
+    {
+      "name": "nat_rule_collection_group",
+      "priority": 100,
+      "rule_collections": [
+        {
+          "name": "natrulecoll",
+          "priority": 112,
+          "action": "Dnat",
+          "rules": [
+            {
+              "name": "DNAT-HTTPS-traffic",
+              "description": "D-NAT all outbound web traffic for inspection",
+              "source_addresses": [
+                "*"
+              ],
+              "destination_address": "10.1.0.4",
+              "destination_ports": [
+                "443"
+              ],
+              "protocols": [
+                "TCP"
+              ],
+              "translated_address": "1.2.3.5",
+              "translated_port": "8443"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

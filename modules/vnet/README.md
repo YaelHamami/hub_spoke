@@ -25,7 +25,7 @@ No modules.
 ## Usage
  ```hcl
 module "hub_vnet" {
-  source              = "./modules/vnet"
+  source              = "relative/path/to-file"
   resource_group_name = local.hub_resource_group_name
   name                = local.hub_vnet_name
   location            = local.location

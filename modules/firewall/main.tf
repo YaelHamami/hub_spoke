@@ -7,18 +7,13 @@ resource "azurerm_public_ip" "firewall_public_ip" {
 }
 
 module "policy" {
-  source                               = "../firewall_policy"
-  location                             = var.location
-  policy_name                          = var.firewall_policy_name
-  resource_group_name                  = var.resource_group_name
-  network_rule_collection_priority     = var.network_rule_collection_priority
-  network_rules                        = var.network_rules
-  network_rule_action                  = var.network_rule_action
-  nat_rule_collection_priority         = var.nat_rule_collection_priority
-  nat_rules                            = var.nat_rules
-  application_rule_collection_priority = var.application_rule_collection_priority
-  application_rules                    = var.application_rules
-  application_rule_action              = var.application_rule_action
+  source                             = "../firewall_policy"
+  location                           = var.location
+  policy_name                        = var.firewall_policy_name
+  resource_group_name                = var.resource_group_name
+  network_rule_collection_groups     = var.network_rule_collection_groups
+  application_rule_collection_groups = var.application_rule_collection_groups
+  nat_rule_collection_group          = var.nat_rule_collection_group
 }
 
 resource "azurerm_firewall" "firewall" {
@@ -45,6 +40,10 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {
 
   log {
     category = "AzureFirewallApplicationRule"
+  }
+
+  log {
+    category = "AzureFirewallDnsProxy"
   }
 
   metric {

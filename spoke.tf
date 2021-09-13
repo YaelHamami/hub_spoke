@@ -10,9 +10,9 @@ locals {
   spoke_subnet_address_prefixes = ["10.0.0.0/24"]
 
   spoke_route_table_name = "${local.spoke-prefix}-route-table"
-  spoke_routes = jsondecode(templatefile("./templates/routes/spoke_routes.json", {
-    "destination_address_prefix" = module.vpn.client_address_space
-    "firewall_private_ip"        = module.firewall.private_ip
+  spoke_routes           = jsondecode(templatefile("./templates/routes/spoke_routes.json", {
+    "vpn_client_address_prefix" = module.vpn.client_address_space
+    "firewall_private_ip"       = module.firewall.private_ip
   })).spoke_routes
 
   storage_data_disks = [
@@ -40,11 +40,11 @@ module "spoke_vnet" {
   name                = local.spoke_vnet_name
   resource_group_name = azurerm_resource_group.spoke.name
   address_space       = local.spoke_vnet_address_space
-  subnets = [{
+  subnets             = [{
     name             = local.spoke_subnet_name
     address_prefixes = local.spoke_vnet_address_space
   }]
-  depends_on = [azurerm_resource_group.spoke]
+  depends_on          = [azurerm_resource_group.spoke]
 }
 
 module "ubuntu_vm_spoke" {
@@ -67,9 +67,9 @@ module "spoke_route_table" {
   route_table_name       = local.spoke_route_table_name
   routes                 = local.spoke_routes
   associated_subnets_ids = [module.spoke_vnet.subnets.SpokeSubnet.id]
-  depends_on = [
+  depends_on             = [
     module.spoke_vnet,
-  module.hub_vnet]
+    module.hub_vnet]
 }
 
 module "hub_spoke_two_way_peering" {
@@ -83,8 +83,8 @@ module "hub_spoke_two_way_peering" {
   remote_vnet_id                     = module.hub_vnet.id
   remote_local_resource_group_name   = module.hub_vnet.object.resource_group_name
   remote_local_allow_gateway_transit = true
-  depends_on = [
+  depends_on                         = [
     module.spoke_vnet,
     module.hub_vnet,
-  module.vpn]
+    module.vpn]
 }
