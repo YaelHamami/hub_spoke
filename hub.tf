@@ -23,10 +23,6 @@ locals {
   network_rule_collection_group     = jsondecode(templatefile("./templates/rule_collection_groups/network_groups.json", {
     vpn_client_address_space = local.vpn_client_address_space[0]
   })).network_rule_collection_group
-  application_rule_collection_group = jsondecode(templatefile("./templates/rule_collection_groups/application_groups.json", {
-  })).application_rule_collection_group
-  nat_rule_collection_group         = jsondecode(templatefile("./templates/rule_collection_groups/nat_groups.json", {
-  })).nat_rule_collection_group
 
   virtual_gateway_name = "${local.hub_prefix}-virtual-gateway"
   hub_routes           = jsondecode(templatefile("./templates/routes/hub_gateway.json", {
@@ -80,8 +76,6 @@ module "firewall" {
   vnet_name                          = module.hub_vnet.name
   firewall_policy_name               = local.hub_firewall_policy_name
   network_rule_collection_groups     = local.network_rule_collection_group
-  application_rule_collection_groups = local.application_rule_collection_group
-  nat_rule_collection_group          = local.nat_rule_collection_group
   log_analytics_workspace_id         = azurerm_log_analytics_workspace.logs.id
   depends_on                         = [module.hub_vnet, azurerm_log_analytics_workspace.logs]
 }
@@ -111,7 +105,3 @@ module "gateway_route_table" {
   associated_subnets_ids = [module.hub_vnet.subnets.GatewaySubnet.id]
   depends_on             = [module.firewall, module.vpn]
 }
-
-
-
-

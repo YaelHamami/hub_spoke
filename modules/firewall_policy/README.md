@@ -8,8 +8,9 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_application_rule_collection_groups"></a> [application\_rule\_collection\_groups](#input\_application\_rule\_collection\_groups) | This object is a list of all the application rule collection groups associated with the firewall policy. | <pre>list(object({<br>    name             = string<br>    priority         = number<br>    rule_collections = list(object({<br>      name     = string<br>      priority = number<br>      action   = string<br>      rules    = list(object({<br>        name              = string<br>        protocols         = list(object({<br>          type = string<br>          port = number<br>        }))<br>        source_addresses  = list(string)<br>        destination_fqdns = list(string)<br>      }))<br>    }))<br>  }))</pre> | `[]` | no |
+| <a name="input_firewall_public_ip"></a> [firewall\_public\_ip](#input\_firewall\_public\_ip) | The ip address of the firewall associated with the policy. Required only when creating nat rules. | `string` | `null` | no |
 | <a name="input_location"></a> [location](#input\_location) | Location name. | `string` | n/a | yes |
-| <a name="input_nat_rule_collection_group"></a> [nat\_rule\_collection\_group](#input\_nat\_rule\_collection\_group) | This object is a list of all the nat rule collection groups associated with the firewall policy. | <pre>list(object({<br>    name             = string<br>    priority         = number<br>    rule_collections = list(object({<br>      name     = string<br>      priority = number<br>      action   = string<br>      rules    = list(object({<br>        name                = string<br>        protocols           = list(string)<br>        source_addresses    = list(string)<br>        destination_address = string<br>        destination_ports   = list(string)<br>        translated_address  = string<br>        translated_port     = string<br>      }))<br>    }))<br>  }))</pre> | `[]` | no |
+| <a name="input_nat_rule_collection_group"></a> [nat\_rule\_collection\_group](#input\_nat\_rule\_collection\_group) | This object is a list of all the nat rule collection groups associated with the firewall policy. | <pre>list(object({<br>    name             = string<br>    priority         = number<br>    rule_collections = list(object({<br>      name     = string<br>      priority = number<br>      action   = string<br>      rules    = list(object({<br>        name                = string<br>        protocols           = list(string)<br>        source_addresses    = list(string)<br>        destination_ports   = list(string)<br>        translated_address  = string<br>        translated_port     = string<br>      }))<br>    }))<br>  }))</pre> | `[]` | no |
 | <a name="input_network_rule_collection_groups"></a> [network\_rule\_collection\_groups](#input\_network\_rule\_collection\_groups) | This object is a list of all the network rule collection groups associated with the firewall policy. | <pre>list(object({<br>    name             = string<br>    priority         = number<br>    rule_collections = list(object({<br>      name     = string<br>      priority = number<br>      action   = string<br>      rules    = list(object({<br>        name                  = string<br>        protocols             = list(string)<br>        source_addresses      = list(string)<br>        destination_addresses = list(string)<br>        destination_ports     = list(string)<br>      }))<br>    }))<br>  }))</pre> | `[]` | no |
 | <a name="input_policy_name"></a> [policy\_name](#input\_policy\_name) | policy name | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Resource group name. | `string` | n/a | yes |
@@ -27,10 +28,11 @@ No modules.
 ## Usage
  ```hcl
 module "policy" {
-  source                             = "relative/path/to-file"
+  source                             = "../modules/firewall_policy"
   location                           = "West Europe"
   policy_name                        = "my-firewall-policy"
   resource_group_name                = "hub"
+  firewall_public_ip                 = "20.67.24.111"
   network_rule_collection_groups     = [
     {
       name             = "network_rule_collection_group"
@@ -105,20 +107,19 @@ module "policy" {
           action   = "Dnat",
           rules    = [
             {
-              name                = "DNAT-HTTPS-traffic",
-              description         = "D-NAT all outbound web traffic for inspection",
-              source_addresses    = [
+              name               = "DNAT-HTTPS-traffic",
+              description        = "D-NAT all outbound web traffic for inspection",
+              source_addresses   = [
                 "*"
               ],
-              destination_address = "10.1.0.4",
-              destination_ports   = [
+              destination_ports  = [
                 "443"
               ],
-              protocols           = [
+              protocols          = [
                 "TCP"
               ],
-              translated_address  = "1.2.3.5",
-              translated_port     = "8443"
+              translated_address = "1.2.3.5",
+              translated_port    = "8443"
             }
           ]
         }

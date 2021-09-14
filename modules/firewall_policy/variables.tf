@@ -13,6 +13,12 @@ variable "location" {
   description = "Location name."
 }
 
+variable "firewall_public_ip" {
+  type = string
+  default = null
+  description = "The ip address of the firewall associated with the policy. Required only when creating nat rules."
+}
+
 variable "nat_rule_collection_group" {
   type        = list(object({
     name             = string
@@ -25,7 +31,6 @@ variable "nat_rule_collection_group" {
         name                = string
         protocols           = list(string)
         source_addresses    = list(string)
-        destination_address = string
         destination_ports   = list(string)
         translated_address  = string
         translated_port     = string

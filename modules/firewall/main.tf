@@ -11,6 +11,7 @@ module "policy" {
   location                           = var.location
   policy_name                        = var.firewall_policy_name
   resource_group_name                = var.resource_group_name
+  firewall_public_ip                 = azurerm_public_ip.firewall_public_ip.ip_address
   network_rule_collection_groups     = var.network_rule_collection_groups
   application_rule_collection_groups = var.application_rule_collection_groups
   nat_rule_collection_group          = var.nat_rule_collection_group
@@ -27,6 +28,7 @@ resource "azurerm_firewall" "firewall" {
     subnet_id            = var.firewall_subnet_id
     public_ip_address_id = azurerm_public_ip.firewall_public_ip.id
   }
+  depends_on = [module.policy]
 }
 
 resource "azurerm_monitor_diagnostic_setting" "diagnostic_setting" {

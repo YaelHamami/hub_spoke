@@ -15,7 +15,6 @@
               "source_addresses": [
                 "*"
               ],
-              "destination_address": "10.1.0.4",
               "destination_ports": [
                 "443"
               ],

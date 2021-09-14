@@ -45,7 +45,6 @@ variable "nat_rule_collection_group" {
         name                = string
         protocols           = list(string)
         source_addresses    = list(string)
-        destination_address = string
         destination_ports   = list(string)
         translated_address  = string
         translated_port     = string
@@ -99,4 +98,3 @@ variable "network_rule_collection_groups" {
   default     = []
   description = "This object is a list of all the network rule collection groups associated with the firewall policy."
 }
-

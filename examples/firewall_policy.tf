@@ -1,8 +1,9 @@
 module "policy" {
-  source                             = "relative/path/to-file"
+  source                             = "../modules/firewall_policy"
   location                           = "West Europe"
   policy_name                        = "my-firewall-policy"
   resource_group_name                = "hub"
+  firewall_public_ip                 = "20.67.24.111"
   network_rule_collection_groups     = [
     {
       name             = "network_rule_collection_group"
@@ -77,20 +78,19 @@ module "policy" {
           action   = "Dnat",
           rules    = [
             {
-              name                = "DNAT-HTTPS-traffic",
-              description         = "D-NAT all outbound web traffic for inspection",
-              source_addresses    = [
+              name               = "DNAT-HTTPS-traffic",
+              description        = "D-NAT all outbound web traffic for inspection",
+              source_addresses   = [
                 "*"
               ],
-              destination_address = "10.1.0.4",
-              destination_ports   = [
+              destination_ports  = [
                 "443"
               ],
-              protocols           = [
+              protocols          = [
                 "TCP"
               ],
-              translated_address  = "1.2.3.5",
-              translated_port     = "8443"
+              translated_address = "1.2.3.5",
+              translated_port    = "8443"
             }
           ]
         }
