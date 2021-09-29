@@ -25,9 +25,9 @@ variable "dns_servers" {
 }
 
 variable "subnets" {
-  type = list(object({
-      name                 = string
-      address_prefixes     = list(string)
+  type        = list(object({
+    name             = string
+    address_prefixes = list(string)
   }))
   description = "All subnets related to the vnet."
 }

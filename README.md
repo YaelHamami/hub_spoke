@@ -21,6 +21,7 @@
 | <a name="module_gateway_route_table"></a> [gateway\_route\_table](#module\_gateway\_route\_table) | ./modules/route_table | n/a |
 | <a name="module_hub_spoke_two_way_peering"></a> [hub\_spoke\_two\_way\_peering](#module\_hub\_spoke\_two\_way\_peering) | ./modules/vnet_two_way_peering | n/a |
 | <a name="module_hub_vnet"></a> [hub\_vnet](#module\_hub\_vnet) | ./modules/vnet | n/a |
+| <a name="module_network_security_group"></a> [network\_security\_group](#module\_network\_security\_group) | ./modules/network_security_group | n/a |
 | <a name="module_spoke_route_table"></a> [spoke\_route\_table](#module\_spoke\_route\_table) | ./modules/route_table | n/a |
 | <a name="module_spoke_vnet"></a> [spoke\_vnet](#module\_spoke\_vnet) | ./modules/vnet | n/a |
 | <a name="module_ubuntu_vm_spoke"></a> [ubuntu\_vm\_spoke](#module\_ubuntu\_vm\_spoke) | ./modules/vm | n/a |

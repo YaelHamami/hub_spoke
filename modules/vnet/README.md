@@ -12,7 +12,7 @@
 | <a name="input_location"></a> [location](#input\_location) | The location/region where the virtual network is created. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | Vnet name. | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group in which to create the virtual network. | `string` | n/a | yes |
-| <a name="input_subnets"></a> [subnets](#input\_subnets) | All subnets related to the vnet. | <pre>list(object({<br>      name                 = string<br>      address_prefixes     = list(string)<br>  }))</pre> | n/a | yes |
+| <a name="input_subnets"></a> [subnets](#input\_subnets) | All subnets related to the vnet. | <pre>list(object({<br>    name             = string<br>    address_prefixes = list(string)<br>  }))</pre> | n/a | yes |
 ## Modules
 
 No modules.
@@ -51,3 +51,4 @@ module "hub_vnet" {
 | <a name="output_name"></a> [name](#output\_name) | The vnet name. |
 | <a name="output_object"></a> [object](#output\_object) | The full vnet object. |
 | <a name="output_subnets"></a> [subnets](#output\_subnets) | All the subnets associated with the vnet. |
+| <a name="output_subnets_ids"></a> [subnets\_ids](#output\_subnets\_ids) | The ids of all the subnets associated with the vnet. |

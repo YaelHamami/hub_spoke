@@ -11,11 +11,13 @@ locals {
 
   spoke_network_security_group_name  = "${local.spoke-prefix}-nsg"
   spoke_network_security_group_rules = jsondecode(templatefile("./templates/network_security_group_rules/spoke_network_security_group.json", {
+    "vpn_client_address_space"      = local.vpn_client_address_space[0]
+    "spoke_subnet_address_space" = local.spoke_subnet_address_prefixes[0]
   })).rules
 
   spoke_route_table_name = "${local.spoke-prefix}-route-table"
   spoke_routes           = jsondecode(templatefile("./templates/routes/spoke_routes.json", {
-    "vpn_client_address_prefix" = module.vpn.client_address_space
+    "vpn_client_address_prefix" = local.vpn_client_address_space[0]
     "firewall_private_ip"       = module.firewall.private_ip
   })).spoke_routes
 
@@ -57,7 +59,7 @@ module "network_security_group" {
   name                = local.spoke_network_security_group_name
   resource_group_name = azurerm_resource_group.spoke.name
   security_rules      = local.spoke_network_security_group_rules
-  subnets_id          = [for subnet in module.spoke_vnet.subnets : subnet.id]
+  subnets_id          = module.spoke_vnet.subnets_ids
   depends_on          = [module.spoke_vnet, azurerm_resource_group.spoke]
 }
 
@@ -80,7 +82,7 @@ module "spoke_route_table" {
   location               = azurerm_resource_group.spoke.location
   route_table_name       = local.spoke_route_table_name
   routes                 = local.spoke_routes
-  associated_subnets_ids = [module.spoke_vnet.subnets.SpokeSubnet.id]
+  associated_subnets_ids = module.spoke_vnet.subnets_ids
   depends_on             = [
     module.spoke_vnet,
     module.hub_vnet]
