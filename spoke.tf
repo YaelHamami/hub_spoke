@@ -9,6 +9,10 @@ locals {
   spoke_subnet_name             = "SpokeSubnet"
   spoke_subnet_address_prefixes = ["10.0.0.0/24"]
 
+  spoke_network_security_group_name  = "${local.spoke-prefix}-nsg"
+  spoke_network_security_group_rules = jsondecode(templatefile("./templates/network_security_group_rules/spoke_network_security_group.json", {
+  })).rules
+
   spoke_route_table_name = "${local.spoke-prefix}-route-table"
   spoke_routes           = jsondecode(templatefile("./templates/routes/spoke_routes.json", {
     "vpn_client_address_prefix" = module.vpn.client_address_space
@@ -45,6 +49,16 @@ module "spoke_vnet" {
     address_prefixes = local.spoke_vnet_address_space
   }]
   depends_on          = [azurerm_resource_group.spoke]
+}
+
+module "network_security_group" {
+  source              = "./modules/network_security_group"
+  location            = azurerm_resource_group.spoke.location
+  name                = local.spoke_network_security_group_name
+  resource_group_name = azurerm_resource_group.spoke.name
+  security_rules      = local.spoke_network_security_group_rules
+  subnets_id          = [for subnet in module.spoke_vnet.subnets : subnet.id]
+  depends_on          = [module.spoke_vnet, azurerm_resource_group.spoke]
 }
 
 module "ubuntu_vm_spoke" {
