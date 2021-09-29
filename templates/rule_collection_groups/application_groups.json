@@ -1,0 +1,34 @@
+{
+  "application_rule_collection_group": [
+    {
+      "name": "app_rule_collection_group",
+      "priority": 300,
+      "rule_collections": [
+        {
+          "name": "apprulecoll",
+          "priority": 110,
+          "action": "Deny",
+          "rules": [
+            {
+              "name": "rule1",
+              "description": "Deny inbound rule",
+              "protocols": [
+                {
+                  "type": "Https",
+                  "port": 443
+                }
+              ],
+              "destination_fqdns": [
+                "www.test.com"
+              ],
+              "source_addresses": [
+                "216.58.216.164",
+                "10.0.0.0/24"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

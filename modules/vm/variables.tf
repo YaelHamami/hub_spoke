@@ -1,17 +1,3 @@
-variable "prefix" {
-  type = string
-  description = "The prefix of certain values in the vm module."
-}
-
-variable "vm_name" {
-  type        = string
-  description = "The virtual machine name."
-  validation {
-    condition     = length(var.vm_name) > 0 && length(var.vm_name) < 15
-    error_message = "The vm name must be between 1 and 15 keys."
-  }
-}
-
 variable "location" {
   type        = string
   description = "All the resources location."
@@ -31,6 +17,21 @@ variable "private_ip_type" {
   type        = string
   default     = "Dynamic"
   description = "Is the private ip address is Dynamic or Static. "
+}
+
+variable "is_linux" {
+  type = bool
+  default = true
+  description = "Decides if the os of the virtual machine."
+}
+
+variable "vm_name" {
+  type        = string
+  description = "The virtual machine name."
+  validation {
+    condition     = length(var.vm_name) > 0 && length(var.vm_name) < 15
+    error_message = "The vm name must be between 1 and 15 keys."
+  }
 }
 
 variable "vm_size" {

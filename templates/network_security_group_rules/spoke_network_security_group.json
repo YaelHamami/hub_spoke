@@ -1,0 +1,48 @@
+{
+  "rules": [
+    {
+      "name": "AllowInboundSSH",
+      "priority": 200,
+      "direction": "Inbound",
+      "access": "Allow",
+      "protocol": "*",
+      "source_port_range": "*",
+      "destination_port_range": "22",
+      "source_address_prefix": "*",
+      "destination_address_prefix": "*"
+    },
+    {
+      "name": "DenyInbound",
+      "priority": 300,
+      "direction": "Inbound",
+      "access": "Deny",
+      "protocol": "*",
+      "source_port_range": "*",
+      "destination_port_range": "*",
+      "source_address_prefix": "*",
+      "destination_address_prefix": "*"
+    },
+    {
+      "name": "AllowOutboundSSH",
+      "priority": 200,
+      "direction": "Outbound",
+      "access": "Allow",
+      "protocol": "*",
+      "source_port_range": "*",
+      "destination_port_range": "22",
+      "source_address_prefix": "*",
+      "destination_address_prefix": "*"
+    },
+    {
+      "name": "DenyOutbound",
+      "priority": 300,
+      "direction": "Outbound",
+      "access": "Deny",
+      "protocol": "*",
+      "source_port_range": "*",
+      "destination_port_range": "*",
+      "source_address_prefix": "*",
+      "destination_address_prefix": "*"
+    }
+  ]
+}

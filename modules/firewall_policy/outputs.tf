@@ -1,4 +1,4 @@
-output "policy" {
+output "object" {
   value = azurerm_firewall_policy.policy.id
   description = "The full firewall policy object."
 }

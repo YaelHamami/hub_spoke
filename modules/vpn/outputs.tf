@@ -3,7 +3,7 @@ output "client_address_space" {
   description = "The address space the client uses to communicate with the other networks."
 }
 
-output "vpn_gateway" {
+output "object" {
   value = azurerm_virtual_network_gateway.vnet_gateway
   description = "The full vpn gateway."
 }

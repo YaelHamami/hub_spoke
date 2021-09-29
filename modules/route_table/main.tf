@@ -16,6 +16,7 @@ resource "azurerm_route_table" "route_table" {
 }
 
 resource "azurerm_subnet_route_table_association" "spoke_association" {
-  subnet_id      = var.associated_subnet_id
+  count          = length(var.associated_subnets_ids)
+  subnet_id      = var.associated_subnets_ids[count.index]
   route_table_id = azurerm_route_table.route_table.id
 }

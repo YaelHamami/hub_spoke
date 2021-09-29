@@ -1,14 +1,14 @@
 module "firewall" {
-  source                     = "relative/path/to-file"
-  prefix                     = local.firewall
-  firewall_name              = "firewall"
-  location                   = azurerm_resource_group.hub.location
-  resource_group_name        = azurerm_resource_group.hub.name
-  vnet_name                  = azurerm_virtual_network.hub_vnet.name
-  address_prefixes           = ["10.1.0.0/26"]
-  policy_name                = "firewall-policy"
-  rule_collection_name       = "rule-collection"
-  rule_collection_priority   = 400
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.logs.id
-  depends_on                 = [azurerm_virtual_network.hub_vnet]
+  source                             = "relative/path/to-file"
+  name                               = "firewall"
+  location                           = azurerm_resource_group.hub.location
+  resource_group_name                = azurerm_resource_group.hub.name
+  firewall_subnet_id                 = module.hub_vnet.subnets.AzureFirewallSubnet.id
+  vnet_name                          = azurerm_virtual_network.hub_vnet.name
+  firewall_policy_name               = "firewall-policy"
+  network_rule_collection_groups     = local.network_rule_collection_group
+  application_rule_collection_groups = local.application_rule_collection_group
+  nat_rule_collection_group          = local.nat_rule_collection_group
+  log_analytics_workspace_id         = azurerm_log_analytics_workspace.logs.id
+  depends_on                         = [module.hub_vnet, azurerm_log_analytics_workspace.logs]
 }
