@@ -10,7 +10,7 @@ module "network_security_group" {
       direction                  = "Inbound"
       access                     = "Allow"
       protocol                   = "TCP"
-      source_port_ranges         = ["*"]
+      source_port_ranges         = ["5234","22"]
       destination_port_ranges    = ["22"]
       source_address_prefix      = "192.168.0.0/24"
       destination_address_prefix = "10.0.0.0/24"
