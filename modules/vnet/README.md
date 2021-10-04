@@ -51,4 +51,4 @@ module "hub_vnet" {
 | <a name="output_name"></a> [name](#output\_name) | The vnet name. |
 | <a name="output_object"></a> [object](#output\_object) | The full vnet object. |
 | <a name="output_subnets"></a> [subnets](#output\_subnets) | All the subnets associated with the vnet. |
-| <a name="output_subnets_ids"></a> [subnets\_ids](#output\_subnets\_ids) | The ids of all the subnets associated with the vnet. |
+| <a name="output_subnets_ids"></a> [subnets\_ids](#output\_subnets\_ids) | A map where the keys are all the associated subnets name and the values are the subnets id. |

@@ -29,7 +29,7 @@ variable "security_rules" {
     destination_address_prefix   = optional(string)
     destination_address_prefixes = optional(list(string))
   }))
-  description = "This object represent a list of all the rules in the network security group."
+  description = "This object represent a list of all the rules in the network security group. The object must contain a value for one field in the optional pair, for example if source_address_prefix was given a value than, the destination_port_ranges must not get a value and vice versa"
 }
 
 variable "subnets_id" {

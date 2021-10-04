@@ -72,7 +72,7 @@ module "firewall" {
   name                               = local.hub_firewall_name
   location                           = azurerm_resource_group.hub.location
   resource_group_name                = azurerm_resource_group.hub.name
-  firewall_subnet_id                 = module.hub_vnet.subnets.AzureFirewallSubnet.id
+  firewall_subnet_id                 = module.hub_vnet.subnets_ids.AzureFirewallSubnet
   vnet_name                          = module.hub_vnet.name
   firewall_policy_name               = local.hub_firewall_policy_name
   network_rule_collection_groups     = local.network_rule_collection_group
@@ -85,7 +85,7 @@ module "vpn" {
   location             = azurerm_resource_group.hub.location
   resource_group_name  = azurerm_resource_group.hub.name
   vnet_name            = module.hub_vnet.name
-  subnet_id            = module.hub_vnet.subnets.GatewaySubnet.id
+  subnet_id            = module.hub_vnet.subnets_ids.GatewaySubnet
   client_address_space = local.vpn_client_address_space
   virtual_gateway_name = local.virtual_gateway_name
   aad_tenant           = local.aad_tenant
@@ -102,6 +102,6 @@ module "gateway_route_table" {
   location               = azurerm_resource_group.hub.location
   route_table_name       = local.hub_route_table_name
   routes                 = local.hub_routes
-  associated_subnets_ids = [module.hub_vnet.subnets.GatewaySubnet.id]
+  associated_subnets_ids = [module.hub_vnet.subnets_ids.GatewaySubnet]
   depends_on             = [module.firewall, module.vpn]
 }

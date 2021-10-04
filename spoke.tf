@@ -11,7 +11,7 @@ locals {
 
   spoke_network_security_group_name  = "${local.spoke-prefix}-nsg"
   spoke_network_security_group_rules = jsondecode(templatefile("./templates/network_security_group_rules/spoke_network_security_group.json", {
-    "vpn_client_address_space"      = local.vpn_client_address_space[0]
+    "vpn_client_address_space"   = local.vpn_client_address_space[0]
     "spoke_subnet_address_space" = local.spoke_subnet_address_prefixes[0]
   })).rules
 
@@ -46,10 +46,12 @@ module "spoke_vnet" {
   name                = local.spoke_vnet_name
   resource_group_name = azurerm_resource_group.spoke.name
   address_space       = local.spoke_vnet_address_space
-  subnets             = [{
-    name             = local.spoke_subnet_name
-    address_prefixes = local.spoke_vnet_address_space
-  }]
+  subnets             = [
+    {
+      name             = local.spoke_subnet_name
+      address_prefixes = local.spoke_vnet_address_space
+    }
+  ]
   depends_on          = [azurerm_resource_group.spoke]
 }
 
@@ -59,7 +61,7 @@ module "network_security_group" {
   name                = local.spoke_network_security_group_name
   resource_group_name = azurerm_resource_group.spoke.name
   security_rules      = local.spoke_network_security_group_rules
-  subnets_id          = module.spoke_vnet.subnets_ids
+  subnets_id          = [module.spoke_vnet.subnets_ids.SpokeSubnet]
   depends_on          = [module.spoke_vnet, azurerm_resource_group.spoke]
 }
 
@@ -68,7 +70,7 @@ module "ubuntu_vm_spoke" {
   vm_name             = var.spoke_vm_name
   location            = azurerm_resource_group.spoke.location
   resource_group_name = azurerm_resource_group.spoke.name
-  subnet_id           = module.spoke_vnet.subnets.SpokeSubnet.id
+  subnet_id           = module.spoke_vnet.subnets_ids.SpokeSubnet
   admin_username      = var.admin_username
   admin_password      = var.admin_password
   storage_data_disks  = local.storage_data_disks
@@ -82,10 +84,11 @@ module "spoke_route_table" {
   location               = azurerm_resource_group.spoke.location
   route_table_name       = local.spoke_route_table_name
   routes                 = local.spoke_routes
-  associated_subnets_ids = module.spoke_vnet.subnets_ids
+  associated_subnets_ids = [module.spoke_vnet.subnets_ids.SpokeSubnet]
   depends_on             = [
     module.spoke_vnet,
-    module.hub_vnet]
+    module.hub_vnet
+  ]
 }
 
 module "hub_spoke_two_way_peering" {
@@ -102,5 +105,6 @@ module "hub_spoke_two_way_peering" {
   depends_on                         = [
     module.spoke_vnet,
     module.hub_vnet,
-    module.vpn]
+    module.vpn
+  ]
 }
